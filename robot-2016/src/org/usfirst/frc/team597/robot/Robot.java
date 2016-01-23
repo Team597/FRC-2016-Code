@@ -4,6 +4,7 @@ package org.usfirst.frc.team597.robot;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -32,6 +33,8 @@ public class Robot extends IterativeRobot {
     VictorSP rightDriveMotorOne;
     VictorSP rightDriveMotorTwo;
     
+    Encoder driveEncoder;
+    
     VictorSP shooterMotor;
     VictorSP shooterMoverMotor;
 	
@@ -57,6 +60,8 @@ public class Robot extends IterativeRobot {
         leftDriveMotorTwo = new VictorSP(1);
         rightDriveMotorOne = new VictorSP(2);
         rightDriveMotorTwo = new VictorSP(3);
+        
+        driveEncoder = new Encoder (0,1);
         
         shooterMotor = new VictorSP(4);
         shooterMoverMotor = new VictorSP(5);
