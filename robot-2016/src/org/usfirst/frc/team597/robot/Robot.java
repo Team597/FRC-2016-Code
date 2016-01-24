@@ -121,14 +121,12 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		leftDriveMotorOne.set(joystickLeft.getY());
-		leftDriveMotorTwo.set(joystickLeft.getY());
-		rightDriveMotorOne.set(joystickRight.getY());
-		rightDriveMotorTwo.set(joystickRight.getY());
+
 		
 		toggleRight.input(joystickLeft.getRawButton(7));
 		toggleLeft.input(joystickRight.getRawButton(7)); 
 		toggleShift = toggleRight.toggleState();
+		toggleShift = toggleLeft.toggleState();
 
 		if (toggleShift == false) {
 			soleShift.set(torqueMode);
