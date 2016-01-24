@@ -27,11 +27,6 @@ public class Robot extends IterativeRobot {
 	Joystick joystickLeft;
 	Joystick joystickRight;
 
-	VictorSP leftDriveMotorOne;
-	VictorSP leftDriveMotorTwo;
-	VictorSP rightDriveMotorOne;
-	VictorSP rightDriveMotorTwo;
-
 	VictorSP shooterMotor;
 	VictorSP shooterMoverMotor;
 
@@ -61,11 +56,6 @@ public class Robot extends IterativeRobot {
 
 		joystickLeft = new Joystick(0);
 		joystickRight = new Joystick(1);
-
-		leftDriveMotorOne = new VictorSP(0);
-		leftDriveMotorTwo = new VictorSP(1);
-		rightDriveMotorOne = new VictorSP(2);
-		rightDriveMotorTwo = new VictorSP(3);
 
 		shooterMotor = new VictorSP(4);
 		shooterMoverMotor = new VictorSP(5);
