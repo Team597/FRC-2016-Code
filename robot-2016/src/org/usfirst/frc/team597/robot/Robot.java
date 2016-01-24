@@ -4,6 +4,7 @@ package org.usfirst.frc.team597.robot;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
@@ -35,8 +36,13 @@ public class Robot extends IterativeRobot {
 	VictorSP shooterMotor;
 	VictorSP shooterMoverMotor;
 
-	boolean toggleState = false;
-	boolean toggleShift = false;
+	boolean toggleStateOne;
+	boolean toggleStateTwo;
+	boolean toggleShift;
+	
+	final Value speedMode = Value.kForward;
+	final Value torqueMode = Value.kReverse;
+	
 	CameraServer server;
 	Compressor comp;
 	DoubleSolenoid soleShift;
@@ -61,6 +67,10 @@ public class Robot extends IterativeRobot {
 
 		shooterMotor = new VictorSP(4);
 		shooterMoverMotor = new VictorSP(5);
+
+		toggleStateOne = false;
+		toggleStateTwo = false;
+		toggleShift = false;
 
 		soleShift = new DoubleSolenoid(0, 1);
 
@@ -112,8 +122,21 @@ public class Robot extends IterativeRobot {
 		rightDriveMotorOne.set(joystickRight.getY());
 		rightDriveMotorTwo.set(joystickRight.getY());
 
-		if (toggleState != joystickLeft.getRawButton(7) && joystickLeft.getRawButton(7) == true) {
+		if (toggleStateOne != joystickLeft.getRawButton(7) && joystickLeft.getRawButton(7) == true) {
+			toggleShift = !toggleShift;
+		}
+		toggleStateOne = joystickLeft.getRawButton(7);
 
+		if (toggleStateTwo != joystickRight.getRawButton(7) && joystickRight.getRawButton(7) == true) {
+			toggleShift = !toggleShift;
+		}
+		toggleStateTwo = joystickRight.getRawButton(7);
+
+		if (toggleShift == false) {
+			soleShift.set(torqueMode);
+		}
+		if (toggleShift == false) {
+			soleShift.set(speedMode);
 		}
 	}
 
