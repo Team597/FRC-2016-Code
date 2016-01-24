@@ -47,6 +47,9 @@ public class Robot extends IterativeRobot {
 	Compressor comp;
 	DoubleSolenoid soleShift;
 
+	Toggle toggleRight;
+	Toggle toggleLeft;
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -77,7 +80,8 @@ public class Robot extends IterativeRobot {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
-
+		toggleRight = new Toggle();
+		toggleLeft = new Toggle();
 	}
 
 	/**
@@ -121,16 +125,10 @@ public class Robot extends IterativeRobot {
 		leftDriveMotorTwo.set(joystickLeft.getY());
 		rightDriveMotorOne.set(joystickRight.getY());
 		rightDriveMotorTwo.set(joystickRight.getY());
-
-		if (toggleStateOne != joystickLeft.getRawButton(7) && joystickLeft.getRawButton(7) == true) {
-			toggleShift = !toggleShift;
-		}
-		toggleStateOne = joystickLeft.getRawButton(7);
-
-		if (toggleStateTwo != joystickRight.getRawButton(7) && joystickRight.getRawButton(7) == true) {
-			toggleShift = !toggleShift;
-		}
-		toggleStateTwo = joystickRight.getRawButton(7);
+		
+		toggleRight.input(joystickLeft.getRawButton(7));
+		toggleLeft.input(joystickRight.getRawButton(7)); 
+		toggleShift = toggleRight.toggleState();
 
 		if (toggleShift == false) {
 			soleShift.set(torqueMode);
