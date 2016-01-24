@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -75,7 +74,7 @@ public class Robot extends IterativeRobot {
 		toggleStateTwo = false;
 		toggleShift = false;
 
-		soleShift = new DoubleSolenoid(0, 1);
+		soleShift = new DoubleSolenoid(0,1);
 
 		server = CameraServer.getInstance();
 		server.setQuality(50);
