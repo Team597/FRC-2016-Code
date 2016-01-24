@@ -46,8 +46,8 @@ public class Robot extends IterativeRobot {
 	Compressor comp;
 	DoubleSolenoid soleShift;
 
-	Toggle toggleRight;
-	Toggle toggleLeft;
+	Toggle shifting;
+	Drive tankDrive;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -79,8 +79,8 @@ public class Robot extends IterativeRobot {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
-		toggleRight = new Toggle();
-		toggleLeft = new Toggle();
+		shifting = new Toggle();
+		tankDrive = new Drive();
 	}
 
 	/**
@@ -102,6 +102,7 @@ public class Robot extends IterativeRobot {
 	}
 
 	/**
+	 * 
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
@@ -120,14 +121,11 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		leftDriveMotorOne.set(joystickLeft.getY());
-		leftDriveMotorTwo.set(joystickLeft.getY());
-		rightDriveMotorOne.set(joystickRight.getY());
-		rightDriveMotorTwo.set(joystickRight.getY());
+		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
+
 		
-		toggleRight.input(joystickLeft.getRawButton(7));
-		toggleLeft.input(joystickRight.getRawButton(7)); 
-		toggleShift = toggleRight.toggleState();
+		shifting.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
+		toggleShift = shifting.toggleState;
 
 		if (toggleShift == false) {
 			soleShift.set(torqueMode);
