@@ -3,7 +3,6 @@ package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -30,16 +29,19 @@ public class Robot extends IterativeRobot {
 	VictorSP shooterMotor;
 	VictorSP shooterMoverMotor;
 
-	boolean toggleStateOne;
-	boolean toggleStateTwo;
-	boolean toggleShift;
+	//button used for first toggle statement
+	boolean toggleButtonOne;
+	//button used for second toggle statement
+	boolean toggleButtonTwo;
+	//boolean being toggled
+	boolean toggleState;
+
 	
 	final Value speedMode = Value.kForward;
 	final Value torqueMode = Value.kReverse;
 	
 	CameraServer server;
 	Compressor comp;
-	DoubleSolenoid soleShift;
 
 	Toggle shifting;
 	Drive tankDrive;
@@ -60,11 +62,9 @@ public class Robot extends IterativeRobot {
 		shooterMotor = new VictorSP(4);
 		shooterMoverMotor = new VictorSP(5);
 
-		toggleStateOne = false;
-		toggleStateTwo = false;
-		toggleShift = false;
-
-		soleShift = new DoubleSolenoid(0,1);
+		toggleButtonOne = false;
+		toggleButtonTwo = false;
+		toggleState = false;
 
 		server = CameraServer.getInstance();
 		server.setQuality(50);
@@ -112,17 +112,7 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
-
-		
 		shifting.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
-		toggleShift = shifting.toggleState;
-
-		if (toggleShift == false) {
-			soleShift.set(torqueMode);
-		}
-		if (toggleShift == false) {
-			soleShift.set(speedMode);
-		}
 	}
 
 	/**
