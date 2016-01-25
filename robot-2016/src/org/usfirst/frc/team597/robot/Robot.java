@@ -113,6 +113,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
 		shifting.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
+		
 	}
 
 	/**
