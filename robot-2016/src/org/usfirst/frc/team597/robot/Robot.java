@@ -1,12 +1,14 @@
 
 package org.usfirst.frc.team597.robot;
 
+import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -36,7 +38,6 @@ public class Robot extends IterativeRobot {
 	//boolean being toggled
 	boolean toggleState;
 
-	
 	final Value speedMode = Value.kForward;
 	final Value torqueMode = Value.kReverse;
 	
@@ -45,7 +46,9 @@ public class Robot extends IterativeRobot {
 
 	Toggle shifting;
 	Drive tankDrive;
-
+	
+	Gyro turnAngle;
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -71,6 +74,13 @@ public class Robot extends IterativeRobot {
 		server.startAutomaticCapture("cam0");
 		shifting = new Toggle();
 		tankDrive = new Drive();
+		turnAngle = AnalogGyro(0);
+	
+	}
+
+	private Gyro AnalogGyro(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -111,8 +121,10 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		turnAngle.getAngle();
 		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
 		shifting.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
+		toggleState = shifting.switchState;
 	}
 
 	/**
