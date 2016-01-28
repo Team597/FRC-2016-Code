@@ -3,14 +3,14 @@ package org.usfirst.frc.team597.robot;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class Drive {
-	//
+	// Motors for tank-drive
 	VictorSP victorLeftFront;
 	VictorSP victorLeftBack;
 	VictorSP victorRightFront;
 	VictorSP victorRightBack;
 
 	public Drive() {
-		// gives arguments(Ports) to the objects used in our Drive
+		// ports for motors on RoboRio
 		victorLeftFront = new VictorSP(0);
 		victorLeftBack = new VictorSP(1);
 		victorRightFront = new VictorSP(2);
@@ -19,12 +19,10 @@ public class Drive {
 	}
 
 	public void input(double doubleInputLeft, double doubleInputRight) {
-		// set the value of the front left victor and the value of the back left
-		// victor to the value of the left input
+		// sets left motors to value of left joystick
 		victorLeftFront.set(doubleInputLeft);
 		victorLeftBack.set(doubleInputLeft);
-		// set the value of the front right victor and the value of back right
-		// victor to the value of the right inputs
+		// set right motors to value of right joystick
 		victorRightFront.set(doubleInputRight);
 		victorRightBack.set(doubleInputRight);
 

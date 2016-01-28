@@ -25,6 +25,7 @@ public class Toggle {
 		 * toggle button is true, run the code below. This is done so that the
 		 * code only activates when the button is being pressed.
 		 */
+		
 		// In summary, press once for on, again for off, again for on.
 		if (toggleButtonOne != valueOne && valueOne == true) {
 			// set the toggle state to the opposite of the toggle state
@@ -42,6 +43,7 @@ public class Toggle {
 		if (toggleState == true) {
 			soleShift.set(Value.kReverse);
 		}
+		
 	}
 
 }
