@@ -10,12 +10,14 @@ public class Toggle {
 	boolean toggleButtonTwo;
 	// boolean being toggled
 	boolean toggleState;
+	boolean toggleOutput;
 	DoubleSolenoid soleShift;
 
 	public Toggle() {
 		toggleButtonOne = false;
 		toggleButtonTwo = false;
 		toggleState = false;
+		toggleOutput = false;
 		soleShift = new DoubleSolenoid(0, 1);
 	}
 
@@ -25,7 +27,7 @@ public class Toggle {
 		 * toggle button is true, run the code below. This is done so that the
 		 * code only activates when the button is being pressed.
 		 */
-		
+
 		// In summary, press once for on, again for off, again for on.
 		if (toggleButtonOne != valueOne && valueOne == true) {
 			// set the toggle state to the opposite of the toggle state
@@ -37,13 +39,8 @@ public class Toggle {
 		}
 		toggleButtonTwo = valueTwo;
 
-		if (toggleState == false) {
-			soleShift.set(Value.kForward);
-		}
-		if (toggleState == true) {
-			soleShift.set(Value.kReverse);
-		}
-		
+		toggleOutput = toggleState;
+
 	}
 
 }
