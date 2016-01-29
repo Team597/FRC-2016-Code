@@ -3,7 +3,6 @@ package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -36,6 +35,7 @@ public class Robot extends IterativeRobot {
 
 	Shifting shifting;
 	Drive tankDrive;
+	Gyro turn;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -60,6 +60,7 @@ public class Robot extends IterativeRobot {
 		server.startAutomaticCapture("cam0");
 		tankDrive = new Drive();
 		shifting = new Shifting(joystickLeft, joystickRight);
+		turn = new Gyro();
 	}
 
 	/**
@@ -102,6 +103,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
 		shifting.teleOp();
+		turn.turnAngle();
 	}
 
 	/**

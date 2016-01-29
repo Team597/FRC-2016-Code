@@ -1,5 +1,7 @@
 package org.usfirst.frc.team597.robot;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 public class Toggle {
 	// button used for first toggle statement
 	boolean toggleButtonOne;
@@ -38,6 +40,7 @@ public class Toggle {
 		toggleButtonTwo = valueTwo;
 
 		switchState = toggleState;
+		SmartDashboard.putBoolean("toggleState: ", toggleState);
 
 	}
 
