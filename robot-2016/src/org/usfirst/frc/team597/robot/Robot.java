@@ -29,21 +29,11 @@ public class Robot extends IterativeRobot {
 	VictorSP shooterMotor;
 	VictorSP shooterMoverMotor;
 
-	//button used for first toggle statement
-	boolean toggleButtonOne;
-	//button used for second toggle statement
-	boolean toggleButtonTwo;
-	//boolean being toggled
 	boolean toggleState;
 
-	
-	final Value speedMode = Value.kForward;
-	final Value torqueMode = Value.kReverse;
-	
 	CameraServer server;
 	Compressor comp;
 
-	Toggle shifting;
 	Drive tankDrive;
 
 	/**
@@ -62,14 +52,9 @@ public class Robot extends IterativeRobot {
 		shooterMotor = new VictorSP(4);
 		shooterMoverMotor = new VictorSP(5);
 
-		toggleButtonOne = false;
-		toggleButtonTwo = false;
-		toggleState = false;
-
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
-		shifting = new Toggle();
 		tankDrive = new Drive();
 	}
 
@@ -112,7 +97,6 @@ public class Robot extends IterativeRobot {
 	 */
 	public void teleopPeriodic() {
 		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
-		shifting.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
 		
 	}
 
