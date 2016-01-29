@@ -7,11 +7,15 @@ public class Toggle {
 	boolean toggleButtonTwo;
 	// boolean being toggled
 	boolean toggleState;
+	// boolean sent to main class
 	boolean switchState;
 
 	public Toggle() {
+		// Sets value to false
 		toggleButtonOne = false;
+		// sets value to false
 		toggleButtonTwo = false;
+		//
 		toggleState = false;
 		switchState = false;
 	}
@@ -36,6 +40,5 @@ public class Toggle {
 		switchState = toggleState;
 
 	}
-
 
 }

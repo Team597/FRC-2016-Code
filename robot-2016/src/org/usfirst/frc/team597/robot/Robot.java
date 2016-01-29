@@ -29,22 +29,14 @@ public class Robot extends IterativeRobot {
 	VictorSP shooterMotor;
 	VictorSP shooterMoverMotor;
 
-	//button used for first toggle statement
-	boolean toggleButtonOne;
-	//button used for second toggle statement
-	boolean toggleButtonTwo;
-	//boolean being toggled
 	boolean toggleState;
 
-	final Value speedMode = Value.kForward;
-	final Value torqueMode = Value.kReverse;
-	
 	CameraServer server;
 	Compressor comp;
 
 	Shifting shifting;
 	Drive tankDrive;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -61,8 +53,6 @@ public class Robot extends IterativeRobot {
 		shooterMotor = new VictorSP(4);
 		shooterMoverMotor = new VictorSP(5);
 
-		toggleButtonOne = false;
-		toggleButtonTwo = false;
 		toggleState = false;
 
 		server = CameraServer.getInstance();
@@ -71,7 +61,6 @@ public class Robot extends IterativeRobot {
 		tankDrive = new Drive();
 		shifting = new Shifting(joystickLeft, joystickRight);
 	}
-
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
