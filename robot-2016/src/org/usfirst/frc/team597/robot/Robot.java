@@ -3,10 +3,8 @@ package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,15 +24,13 @@ public class Robot extends IterativeRobot {
 	Joystick joystickLeft;
 	Joystick joystickRight;
 
-	VictorSP shooterMotor;
-	VictorSP shooterMoverMotor;
-
 	boolean toggleState;
 
 	CameraServer server;
 	Compressor comp;
 
 	Drive tankDrive;
+	Shifting driveShift;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -49,13 +45,12 @@ public class Robot extends IterativeRobot {
 		joystickLeft = new Joystick(0);
 		joystickRight = new Joystick(1);
 
-		shooterMotor = new VictorSP(4);
-		shooterMoverMotor = new VictorSP(5);
-
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
-		tankDrive = new Drive();
+		
+		tankDrive = new Drive(joystickLeft,joystickRight);
+		driveShift = new Shifting(joystickLeft, joystickRight);
 	}
 
 	/**
@@ -96,7 +91,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
+		tankDrive.teleopPeriodic();
+		driveShift.teleopPeriodic();
 		
 	}
 

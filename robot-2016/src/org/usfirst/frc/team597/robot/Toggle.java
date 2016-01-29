@@ -1,7 +1,5 @@
 package org.usfirst.frc.team597.robot;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 
 public class Toggle {
 	// button used for first toggle statement
@@ -11,14 +9,12 @@ public class Toggle {
 	// boolean being toggled
 	boolean toggleState;
 	boolean toggleOutput;
-	DoubleSolenoid soleShift;
 
 	public Toggle() {
 		toggleButtonOne = false;
 		toggleButtonTwo = false;
 		toggleState = false;
 		toggleOutput = false;
-		soleShift = new DoubleSolenoid(0, 1);
 	}
 
 	public void input(boolean valueOne, boolean valueTwo) {
