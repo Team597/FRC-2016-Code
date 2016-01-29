@@ -1,14 +1,12 @@
 
 package org.usfirst.frc.team597.robot;
 
-import edu.wpi.first.wpilibj.AnalogGyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.interfaces.Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -44,10 +42,8 @@ public class Robot extends IterativeRobot {
 	CameraServer server;
 	Compressor comp;
 
-	Toggle shifting;
+	Shifting shifting;
 	Drive tankDrive;
-	
-	Gyro turnAngle;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -72,16 +68,10 @@ public class Robot extends IterativeRobot {
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
-		shifting = new Toggle();
 		tankDrive = new Drive();
-		turnAngle = AnalogGyro(0);
-	
+		shifting = new Shifting(joystickLeft, joystickRight);
 	}
 
-	private Gyro AnalogGyro(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -121,10 +111,8 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		turnAngle.getAngle();
 		tankDrive.input(joystickLeft.getY(), joystickRight.getY());
-		shifting.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
-		toggleState = shifting.switchState;
+		shifting.teleOp();
 	}
 
 	/**
