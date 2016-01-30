@@ -11,8 +11,7 @@ public class Drive {
 	VictorSP victorRightBack;
 	Joystick joystickLeft;
 	Joystick joystickRight;
-	double leftSpeed;
-	double rightSpeed;
+	
 
 	public Drive(Joystick jsLeft, Joystick jsRight) {
 		// ports for motors on RoboRio
@@ -22,12 +21,13 @@ public class Drive {
 		victorRightBack = new VictorSP(3);
 		joystickLeft = jsLeft;
 		joystickRight = jsRight;
-		leftSpeed = joystickLeft.getY();
-		rightSpeed = joystickRight.getY();
+		
 
 	}
 
 	public void teleopPeriodic() {
+		double leftSpeed = joystickLeft.getY();
+		double rightSpeed = joystickRight.getY();
 		// sets left motors to value of left joystick
 		victorLeftFront.set(leftSpeed);
 		victorLeftBack.set(leftSpeed);
