@@ -28,6 +28,7 @@ public class Drive {
 	public void teleopPeriodic() {
 		double leftSpeed = joystickLeft.getY();
 		double rightSpeed = joystickRight.getY();
+		
 		// sets left motors to value of left joystick
 		victorLeftFront.set(leftSpeed);
 		victorLeftBack.set(leftSpeed);
