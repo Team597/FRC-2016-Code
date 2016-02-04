@@ -12,6 +12,7 @@ public class Drive {
 	VictorSP victorRightBack;
 	Joystick joystickLeft;
 	Joystick joystickRight;
+	Gyro Gyro;
 
 	double rightSpeed;
 	double leftSpeed;

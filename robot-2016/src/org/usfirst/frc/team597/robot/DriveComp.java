@@ -9,26 +9,32 @@ public class DriveComp implements PIDOutput {
 	VictorSP victorLeftBack;
 	VictorSP victorRightFront;
 	VictorSP victorRightBack;
+	Joystick joystickLeft;
+	Joystick joystickRight;
 	double leftSpeed;
 	double rightSpeed;
 
 	public DriveComp(VictorSP speedLeftFront, VictorSP speedLeftBack, VictorSP speedRightFront, VictorSP speedRightBack,
-			Joystick jsLeft) {
+			Joystick jsLeft, Joystick jsRight) {
 		victorLeftFront = speedLeftFront;
 		victorLeftBack = speedLeftBack;
 		victorRightFront = speedRightFront;
 		victorRightBack = speedRightBack;
+		joystickLeft = jsLeft;
+		joystickRight = jsRight;
 	}
 
 	@Override
 	public void pidWrite(double output) {
 		// TODO Auto-generated method stub
-		leftSpeed = output;
-		rightSpeed = output * -1;
-		victorLeftFront.set(leftSpeed);
-		victorLeftBack.set(leftSpeed);
-		victorRightFront.set(rightSpeed);
-		victorRightBack.set(rightSpeed);
+		if (joystickLeft.getRawButton(4) && joystickRight.getRawButton(4)) {
+			leftSpeed = output;
+			rightSpeed = output * -1;
+			victorLeftFront.set(leftSpeed);
+			victorLeftBack.set(leftSpeed);
+			victorRightFront.set(rightSpeed);
+			victorRightBack.set(rightSpeed);
+		}
 	}
 
 }
