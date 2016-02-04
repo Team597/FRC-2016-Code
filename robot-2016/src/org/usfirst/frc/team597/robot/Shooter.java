@@ -1,8 +1,8 @@
 package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.VictorSP;
 
 public class Shooter {
@@ -22,6 +22,8 @@ public class Shooter {
 	// Driver's shooting joystick 
 	Joystick joystickShooting;
 	
+	Timer timer;
+	
 	public Shooter() {
 		// Initializing objects
 		shootingMotorOne = new VictorSP(4);
@@ -29,17 +31,21 @@ public class Shooter {
 		solShoot = new DoubleSolenoid(2, 3);
 		
 		joystickShooting = new Joystick(2);
+		
+		timer = new Timer();
 	}
 	
 	// Things to run during teleop
 	public void teleopPeriodic() {
 		intake();
+		shoot();
+		articulate();
 		
 	}
 	
 	// Code for in-taking boulders 
 	public void intake() {
-		// Activates active intake when button 2 is pressed
+		// Activates active-intake when button 2 is pressed
 		if (joystickShooting.getRawButton(2) == true) {
 			shootingMotorOne.set(intakeSpeed);
 			shootingMotorTwo.set(intakeSpeed);
@@ -54,15 +60,29 @@ public class Shooter {
 			shootingMotorOne.set(shootingSpeed);
 			shootingMotorTwo.set(shootingSpeed);
 			
+			Timer.delay(1);
+			
 			// Active piston
-			solShoot.set(Value.kForward);
+			solShoot.set(DoubleSolenoid.Value.kForward);
+			
+			Timer.delay(0.5);
+			
+			// Deactivates piston
+			solShoot.set(DoubleSolenoid.Value.kReverse);
 			
 		}
-		else {
-			// Retract piston
-			solShoot.set(Value.kReverse);
+		
+	}
+	
+	// Code to articulate shooter
+	public void articulate() {
+		// Moves shooter to joystick Y position
+		if (joystickShooting.getRawButton(7) == true) {
+			articulatingMotorOne.set(joystickShooting.getY());
+			articulatingMotorTwo.set(joystickShooting.getY());
 			
 		}
+		
 	}
 	
 	

@@ -31,6 +31,7 @@ public class Robot extends IterativeRobot {
 
 	Drive tankDrive;
 	Shifting driveShift;
+	Shooter shooter;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -51,6 +52,7 @@ public class Robot extends IterativeRobot {
 		
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickLeft, joystickRight);
+		shooter = new Shooter();
 	}
 
 	/**
@@ -93,7 +95,7 @@ public class Robot extends IterativeRobot {
 	public void teleopPeriodic() {
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
-		
+		shooter.teleopPeriodic();
 	}
 
 	/**
