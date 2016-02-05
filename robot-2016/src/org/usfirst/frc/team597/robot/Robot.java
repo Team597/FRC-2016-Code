@@ -20,11 +20,11 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
-
+	
+	// Joysticks for both drivers
 	Joystick joystickLeft;
 	Joystick joystickRight;
-
-	boolean toggleState;
+	Joystick joystickShooting;
 
 	CameraServer server;
 	Compressor comp;
@@ -45,6 +45,7 @@ public class Robot extends IterativeRobot {
 
 		joystickLeft = new Joystick(0);
 		joystickRight = new Joystick(1);
+		joystickShooting = new Joystick(2);
 
 		server = CameraServer.getInstance();
 		server.setQuality(50);
@@ -52,7 +53,7 @@ public class Robot extends IterativeRobot {
 		
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickLeft, joystickRight);
-		shooter = new Shooter();
+		shooter = new Shooter(joystickShooting);
 	}
 
 	/**
