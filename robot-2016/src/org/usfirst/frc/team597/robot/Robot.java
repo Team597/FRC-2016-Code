@@ -25,10 +25,14 @@ public class Robot extends IterativeRobot {
 	Joystick joystickLeft;
 	Joystick joystickRight;
 	Joystick joystickShooting;
-
+	
+	// Enables camera
 	CameraServer server;
+	
+	// Starts compresor
 	Compressor comp;
-
+	
+	// Initializes classes
 	Drive tankDrive;
 	Shifting driveShift;
 	Shooter shooter;
@@ -38,19 +42,23 @@ public class Robot extends IterativeRobot {
 	 * used for any initialization code.
 	 */
 	public void robotInit() {
+		// SmartDashboard stuff
 		chooser = new SendableChooser();
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-
+		
+		// Initializes joysticks
 		joystickLeft = new Joystick(0);
 		joystickRight = new Joystick(1);
 		joystickShooting = new Joystick(2);
-
+		
+		// Sets up camera
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
 		
+		// Sets up classes
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickLeft, joystickRight);
 		shooter = new Shooter(joystickShooting);
@@ -94,6 +102,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
+		// Class teleop functions 
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
 		shooter.teleopPeriodic();
