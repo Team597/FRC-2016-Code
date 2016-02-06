@@ -5,15 +5,15 @@ import edu.wpi.first.wpilibj.VictorSP;
 
 public class Drive {
 	// Motors for tank-drive
-	// Motors for tank-drive
 	VictorSP victorLeftFront;
 	VictorSP victorLeftBack;
 	VictorSP victorRightFront;
 	VictorSP victorRightBack;
 	Joystick joystickLeft;
 	Joystick joystickRight;
+	// added custom gyro class
 	Gyro Gyro;
-
+	// created variables for left speed and right speed
 	double rightSpeed;
 	double leftSpeed;
 
@@ -23,25 +23,22 @@ public class Drive {
 		victorLeftBack = new VictorSP(1);
 		victorRightFront = new VictorSP(2);
 		victorRightBack = new VictorSP(3);
+		// imported joystick from the main class
 		joystickLeft = jsLeft;
 		joystickRight = jsRight;
-
+		// set the value of the left and right speed variables
 		leftSpeed = joystickLeft.getY();
 		rightSpeed = joystickRight.getY() * -1;
 
 	}
 
 	public void teleopPeriodic() {
+
 		if (joystickLeft.getRawButton(1) == false || joystickRight.getRawButton(1) == false) {
 			victorLeftFront.set(leftSpeed);
 			victorLeftBack.set(leftSpeed);
 			victorRightFront.set(rightSpeed);
 			victorRightBack.set(rightSpeed);
-		} else if (joystickLeft.getRawButton(1) == true && joystickRight.getRawButton(1) == true) {
-			victorLeftFront.set(1);
-			victorLeftBack.set(1);
-			victorRightFront.set(-1);
-			victorRightBack.set(-1);
 		}
 
 	}
