@@ -35,6 +35,8 @@ public class Drive {
 	public void teleopPeriodic() {
 
 		if (joystickLeft.getRawButton(1) == false || joystickRight.getRawButton(1) == false) {
+			// sets the value of the motors to the value of the left and right
+			// speed variables.
 			victorLeftFront.set(leftSpeed);
 			victorLeftBack.set(leftSpeed);
 			victorRightFront.set(rightSpeed);
