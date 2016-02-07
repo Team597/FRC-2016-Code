@@ -124,7 +124,6 @@ public class Shooter {
 		else {
 			// Disable PID and reset Encoder
 			pivotingController.disable();
-			pivotingEncoder.reset();
 		}
 		
 		// PID to pivot shooter to preset positions
@@ -137,9 +136,15 @@ public class Shooter {
 			pivotingController.disable();
 		}
 		
+		// Resets encoder when limitswitch is hit
+		if (botLimitSwitch.get() == true) {
+			pivotingEncoder.reset();
+		}
+		
 		// SmartDashboard debugging stuff			
 		SmartDashboard.putNumber("joystick value", joystickShooting.getY() );
-		SmartDashboard.putNumber("motor value", pivotingMotorOne.get() );
+		SmartDashboard.putNumber("pivoting motor value", pivotingMotorOne.get() );
+		SmartDashboard.putBoolean("limit switch state", botLimitSwitch.get() );
 		
 		SmartDashboard.putNumber("encoder get", pivotingEncoder.get() );
 		SmartDashboard.putNumber("encoder rate", pivotingEncoder.getRate() );
