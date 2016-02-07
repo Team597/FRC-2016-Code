@@ -33,7 +33,7 @@ public class Shooter {
 	// PID for articulating shooter
 	PIDController pivotingController;
 		
-	// PID arm pivoting positions
+	// Arm pivoting positions for PID
 	double TOP_POS = 5000;
 	
 	// Driver's shooting joystick 
@@ -110,10 +110,9 @@ public class Shooter {
 	public void articulate() {
 		// Pivot shooter to joystick Y position when button 7 is pressed
 		if (joystickShooting.getRawButton(7) == true) {
-			// Enables PIDController
 			pivotingController.enable();
 			
-			
+			pivotingController.setSetpoint( joystickShooting.getY()  );
 		}
 		
 		// PID to pivot shooter to preset positions
