@@ -110,19 +110,32 @@ public class Shooter {
 	public void articulate() {
 		// Pivot shooter to joystick Y position when button 7 is pressed
 		if (joystickShooting.getRawButton(7) == true) {
+			// Enable PID
 			pivotingController.enable();
 			
-			pivotingController.setSetpoint( joystickShooting.getY()  );
+			// PID maps motor to joystick
+			pivotingController.setSetpoint(joystickShooting.getY() * 5000);
+		}
+		else {
+			// Disable PID and reset Encoder
+			pivotingController.disable();
+			pivotingEncoder.reset();
 		}
 		
 		// PID to pivot shooter to preset positions
+		if (joystickShooting.getRawButton(4) == true) {
+			pivotingController.enable();
+			pivotingController.setSetpoint(TOP_POS);
+		}
+		else {
+			// Disable PID
+			pivotingController.disable(); 
+		}
 		
-					
-		pivotingController.setSetpoint( joystickShooting.getY() );
-					
+		// SmartDashboard debugging stuff			
 		SmartDashboard.putNumber("joystick value", joystickShooting.getY() );
 		SmartDashboard.putNumber("motor value", pivotingMotorOne.get() );
-					
+		
 		SmartDashboard.putNumber("encoder get", pivotingEncoder.get() );
 		SmartDashboard.putNumber("encoder rate", pivotingEncoder.getRate() );
 		SmartDashboard.putNumber("encoder distance", pivotingEncoder.getDistance() );

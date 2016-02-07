@@ -1,7 +1,7 @@
 package org.usfirst.frc.team597.robot;
 
 public class EdgeButton {
-
+	
 	boolean buttonState;
 	boolean risingEdge;
 	boolean fallingEdge;
