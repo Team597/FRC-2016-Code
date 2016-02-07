@@ -26,6 +26,7 @@ public class Drive {
 		// imported joystick from the main class
 		joystickLeft = jsLeft;
 		joystickRight = jsRight;
+		Gyro = new Gyro(joystickLeft, joystickRight);
 
 	}
 
@@ -41,6 +42,11 @@ public class Drive {
 			victorLeftBack.set(leftSpeed);
 			victorRightFront.set(rightSpeed);
 			victorRightBack.set(rightSpeed);
+		} else if (joystickLeft.getRawButton(1) == true || joystickRight.getRawButton(1) == true) {
+			victorLeftFront.set(Gyro.leftSpeed());
+			victorLeftBack.set(Gyro.leftSpeed());
+			victorRightFront.set(Gyro.rightSPeed());
+			victorRightBack.set(Gyro.rightSPeed());
 		}
 
 	}
