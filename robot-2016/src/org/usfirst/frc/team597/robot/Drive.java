@@ -1,4 +1,4 @@
-package org.usfirst.frc.team597.robot;
+ package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
@@ -12,7 +12,7 @@ public class Drive {
 	Joystick joystickLeft;
 	Joystick joystickRight;
 	// added custom gyro class
-	Gyro Gyro;
+//	Gyro Gyro;
 	// created variables for left speed and right speed
 	double rightSpeed;
 	double leftSpeed;
@@ -26,7 +26,7 @@ public class Drive {
 		// imported joystick from the main class
 		joystickLeft = jsLeft;
 		joystickRight = jsRight;
-		Gyro = new Gyro(joystickLeft, joystickRight);
+	//	Gyro = new Gyro(joystickLeft, joystickRight);
 
 	}
 
@@ -43,10 +43,10 @@ public class Drive {
 			victorRightFront.set(rightSpeed);
 			victorRightBack.set(rightSpeed);
 		} else if (joystickLeft.getRawButton(1) == true || joystickRight.getRawButton(1) == true) {
-			victorLeftFront.set(Gyro.leftSpeed());
-			victorLeftBack.set(Gyro.leftSpeed());
-			victorRightFront.set(Gyro.rightSPeed());
-			victorRightBack.set(Gyro.rightSPeed());
+//			victorLeftFront.set(Gyro.leftSpeed());
+//			victorLeftBack.set(Gyro.leftSpeed());
+//			victorRightFront.set(Gyro.rightSPeed());
+//			victorRightBack.set(Gyro.rightSPeed());
 		}
 
 	}

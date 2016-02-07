@@ -1,23 +1,20 @@
 package org.usfirst.frc.team597.robot;
 
-class ToggleButton {
-	// boolean being toggled
+class ToggleButton { // boolean being toggled
 	boolean toggleState;
-
-	EdgeButton edgeButton;
+	boolean lastCheck;
 
 	public ToggleButton() {
 		// gives the value of false to toggleState
 		toggleState = false;
-		edgeButton = new EdgeButton();
+		lastCheck = false;
 	}
 
 	public void input(boolean valueOne) {
-		edgeButton.SetInput(valueOne);
-		if (edgeButton.GetRisingEdge()) {
+		if (valueOne != lastCheck && valueOne == true) {
 			toggleState = !toggleState;
 		}
-
+		lastCheck = valueOne;
 	}
 
 	public boolean Output() {
