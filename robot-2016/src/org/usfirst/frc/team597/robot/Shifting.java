@@ -6,7 +6,8 @@ import edu.wpi.first.wpilibj.Joystick;
 
 public class Shifting {
 	// Call on the toggle class that we created and names it toggleButton
-	Toggle toggleButton;
+	ToggleButton toggleButton;
+
 	// creates a Joystick object and names it joystickLeft
 	Joystick joystickLeft;
 	// creates a Joystick object and names it joystickRight
@@ -24,7 +25,8 @@ public class Shifting {
 
 	public Shifting(Joystick jsLeft, Joystick jsRight) {
 		// finished creating object by making it a new toggle
-		toggleButton = new Toggle();
+		toggleButton = new ToggleButton();
+
 		// finished creating object by making it equal to jsLeft
 		joystickLeft = jsLeft;
 		// finished creating object by making it equal to jsRight
@@ -39,16 +41,15 @@ public class Shifting {
 	public void teleopPeriodic() {
 		// calls on the input void in the toggle class and sets the 7th button
 		// on the left and right joysticks as inputs for the toggle class
-		toggleButton.input(joystickLeft.getRawButton(7), joystickRight.getRawButton(7));
+		toggleButton.input(joystickLeft.getRawButton(7) || joystickRight.getRawButton(7));
 		// sets toggle state equal to the output boolean from the toggle class
-		toggleState = toggleButton.toggleOutput;
+		toggleState = toggleButton.Output();
 
 		// if toggleState is false it sets the driveShifter to speedMode
 		if (toggleState == false) {
 			driveShifter.set(speedMode);
-		}
-		// if toggleState is true it sets the driverShifter to torqueMode
-		if (toggleState == true) {
+		} else {
+			// if toggleState is true it sets the driverShifter to torqueMode
 			driveShifter.set(torqueMode);
 		}
 	}
