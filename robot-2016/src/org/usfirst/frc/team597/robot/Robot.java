@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	// http://play.typeracer.com/?rt=vbhrevyp3p9r
 	final String defaultAuto = "Default";
 	final String customAuto = "My Auto";
 	String autoSelected;
@@ -102,7 +103,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		// Class teleop functions 
+		// Class teleop functions
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
 		shooter.teleopPeriodic();
