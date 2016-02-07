@@ -16,8 +16,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String defaultAuto = "Default";
-	final String customAuto = "My Auto";
+	final String lowBarHighGoal = "Lowbar High-goal";
+	final String lowBarCross = "Lowbar Cross";
+	
 	String autoSelected;
 	SendableChooser chooser;
 	
@@ -44,8 +45,8 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// SmartDashboard stuff
 		chooser = new SendableChooser();
-		chooser.addDefault("Default Auto", defaultAuto);
-		chooser.addObject("My Auto", customAuto);
+		chooser.addDefault("Lowbar High-goal", lowBarHighGoal);
+		chooser.addObject("Lowbar Cross", lowBarCross);
 		SmartDashboard.putData("Auto choices", chooser);
 		
 		// Initializes joysticks
@@ -88,12 +89,12 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
-		case customAuto:
-			// Put custom auto code here
+		case lowBarCross:
+			// Custom auto code here
 			break;
-		case defaultAuto:
+		case lowBarHighGoal:
 		default:
-			// Put default auto code here
+			// Default auto code here
 			break;
 		}
 	}
@@ -102,7 +103,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		// Class teleop functions 
+		// Class teleop functions
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
 		shooter.teleopPeriodic();

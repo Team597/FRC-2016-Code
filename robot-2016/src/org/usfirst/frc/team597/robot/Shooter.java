@@ -14,6 +14,9 @@ public class Shooter {
 	VictorSP pivotingMotorOne;
 	VictorSP pivotingMotorTwo;
 	
+	// 1 motor for in-take roller
+	VictorSP intakeMotor;
+	
 	// 2 motors and 1 piston for shooting boulder
 	VictorSP shootingMotorOne;
 	VictorSP shootingMotorTwo;
@@ -44,6 +47,7 @@ public class Shooter {
 		// Initializes motors
 		pivotingMotorOne = new VictorSP(8);		// motor on port 8 being tested with PID rn
 		pivotingMotorTwo = new VictorSP(5);
+		intakeMotor = new VictorSP(9);
 		shootingMotorOne = new VictorSP(6);
 		shootingMotorTwo = new VictorSP(7);
 		
@@ -79,6 +83,7 @@ public class Shooter {
 		if (joystickShooting.getRawButton(3) == true) {
 			shootingMotorOne.set(intakeSpeed);
 			shootingMotorTwo.set(intakeSpeed);
+			intakeMotor.set(intakeSpeed);
 		}
 		
 	}
@@ -119,7 +124,6 @@ public class Shooter {
 		else {
 			// Disable PID and reset Encoder
 			pivotingController.disable();
-			pivotingEncoder.reset();
 		}
 		
 		// PID to pivot shooter to preset positions
@@ -129,16 +133,23 @@ public class Shooter {
 		}
 		else {
 			// Disable PID
-			pivotingController.disable(); 
+			pivotingController.disable();
+		}
+		
+		// Resets encoder when limitswitch is hit
+		if (botLimitSwitch.get() == true) {
+			pivotingEncoder.reset();
 		}
 		
 		// SmartDashboard debugging stuff			
 		SmartDashboard.putNumber("joystick value", joystickShooting.getY() );
-		SmartDashboard.putNumber("motor value", pivotingMotorOne.get() );
+		SmartDashboard.putNumber("pivoting motor value", pivotingMotorOne.get() );
+		SmartDashboard.putBoolean("limit switch state", botLimitSwitch.get() );
 		
 		SmartDashboard.putNumber("encoder get", pivotingEncoder.get() );
 		SmartDashboard.putNumber("encoder rate", pivotingEncoder.getRate() );
 		SmartDashboard.putNumber("encoder distance", pivotingEncoder.getDistance() );
+		
 	}
 	
 	
