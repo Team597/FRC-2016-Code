@@ -32,11 +32,6 @@ public class Robot extends IterativeRobot {
 	// Starts compresor
 	Compressor comp;
 	
-	// Initializes classes
-	Drive tankDrive;
-	Shifting driveShift;
-	Shooter shooter;
-
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -58,10 +53,6 @@ public class Robot extends IterativeRobot {
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
 		
-		// Sets up classes
-		tankDrive = new Drive(joystickLeft,joystickRight);
-		driveShift = new Shifting(joystickLeft, joystickRight);
-		shooter = new Shooter(joystickShooting);
 	}
 
 	/**
@@ -102,10 +93,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		// Class teleop functions 
-		tankDrive.teleopPeriodic();
-		driveShift.teleopPeriodic();
-		shooter.teleopPeriodic();
+		
 	}
 
 	/**
