@@ -16,16 +16,10 @@ public class Gyro {
 	VictorSP victorLeftBack;
 	VictorSP victorRightFront;
 	VictorSP victorRightBack;
-	
-	public Gyro(VictorSP speedLeftFront, VictorSP speedLeftBack, VictorSP speedRightFront, VictorSP speedRightBack,
-			Joystick jsLeft, Joystick jsRight) {
-		victorLeftFront = speedLeftFront;
-		victorLeftBack = speedLeftBack;
-		victorRightFront = speedRightFront;
-		victorRightBack = speedRightBack;
+
+	public Gyro(Joystick jsLeft, Joystick jsRight) {
 		driveGyro = new AnalogGyro(0);
 		drivePID = new PIDController(1.0, 0.0, 0.0, driveGyro, PIDOutput);
-		DriveComp = new DriveComp(null,null,null,null,null,null);
 	}
 
 	public void TeleopPeriodic() {
