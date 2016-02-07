@@ -26,15 +26,15 @@ public class Drive {
 		// imported joystick from the main class
 		joystickLeft = jsLeft;
 		joystickRight = jsRight;
-		// set the value of the left and right speed variables
-		leftSpeed = joystickLeft.getY();
-		rightSpeed = joystickRight.getY() * -1;
 
 	}
 
 	public void teleopPeriodic() {
+		// set the value of the left and right speed variables
+		leftSpeed = joystickLeft.getY();
+		rightSpeed = joystickRight.getY() * -1;
 
-		if (joystickLeft.getRawButton(1) == false || joystickRight.getRawButton(1) == false) {
+		if (joystickLeft.getRawButton(1) == false && joystickRight.getRawButton(1) == false) {
 			// sets the value of the motors to the value of the left and right
 			// speed variables.
 			victorLeftFront.set(leftSpeed);
