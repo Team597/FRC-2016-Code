@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,7 +26,10 @@ public class Robot extends IterativeRobot {
 	Joystick joystickLeft;
 	Joystick joystickRight;
 	Joystick joystickShooting;
-	
+	VictorSP rightfrontMotor;
+	VictorSP leftfrontMotor;
+	VictorSP rightbackMotor;
+	VictorSP leftbackMotor;
 	// Enables camera
 	CameraServer server;
 	
@@ -47,7 +51,11 @@ public class Robot extends IterativeRobot {
 		joystickLeft = new Joystick(0);
 		joystickRight = new Joystick(1);
 		joystickShooting = new Joystick(2);
-		
+		//Initializes joysticks
+		rightfrontMotor = new VictorSP(0);
+		leftfrontMotor= new VictorSP(1);
+		rightbackMotor= new VictorSP(2);
+		leftbackMotor = new VictorSP (3);
 		// Sets up camera
 		server = CameraServer.getInstance();
 		server.setQuality(50);
