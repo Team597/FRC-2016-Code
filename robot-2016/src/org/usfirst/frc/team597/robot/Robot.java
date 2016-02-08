@@ -1,4 +1,4 @@
-// This is chris
+// This is Chris
 package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.CameraServer;
@@ -21,7 +21,7 @@ public class Robot extends IterativeRobot {
 	final String customAuto = "My Auto";
 	String autoSelected;
 	SendableChooser chooser;
-	
+
 	// Joysticks for both drivers
 	Joystick joystickLeft;
 	Joystick joystickRight;
@@ -32,10 +32,10 @@ public class Robot extends IterativeRobot {
 	VictorSP leftbackMotor;
 	// Enables camera
 	CameraServer server;
-	
-	// Starts compresor
+
+	// Starts compressor
 	Compressor comp;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -46,21 +46,21 @@ public class Robot extends IterativeRobot {
 		chooser.addDefault("Default Auto", defaultAuto);
 		chooser.addObject("My Auto", customAuto);
 		SmartDashboard.putData("Auto choices", chooser);
-		
+
 		// Initializes joysticks
 		joystickLeft = new Joystick(0);
 		joystickRight = new Joystick(1);
 		joystickShooting = new Joystick(2);
-		//Initializes joysticks
+		// Initializes joysticks
 		rightfrontMotor = new VictorSP(0);
-		leftfrontMotor= new VictorSP(1);
-		rightbackMotor= new VictorSP(2);
-		leftbackMotor = new VictorSP (3);
+		leftfrontMotor = new VictorSP(1);
+		rightbackMotor = new VictorSP(2);
+		leftbackMotor = new VictorSP(3);
 		// Sets up camera
 		server = CameraServer.getInstance();
 		server.setQuality(50);
 		server.startAutomaticCapture("cam0");
-		
+
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during operator control
 	 */
 	public void teleopPeriodic() {
-		
+
 	}
 
 	/**
