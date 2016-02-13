@@ -27,10 +27,10 @@ public class Robot extends IterativeRobot {
 	Joystick joystickLeft;
 	Joystick joystickRight;
 	Joystick joystickShooting;
-	VictorSP rightfrontMotor;
-	VictorSP leftfrontMotor;
-	VictorSP rightbackMotor;
-	VictorSP leftbackMotor;
+	VictorSP rightFrontMotor;
+	VictorSP leftFrontMotor;
+	VictorSP rightBackMotor;
+	VictorSP leftBackMotor;
 	// Enables camera
 	CameraServer server;
 
@@ -53,10 +53,10 @@ public class Robot extends IterativeRobot {
 		joystickRight = new Joystick(1);
 		joystickShooting = new Joystick(2);
 		// Initializes joysticks
-		rightfrontMotor = new VictorSP(0);
-		leftfrontMotor = new VictorSP(1);
-		rightbackMotor = new VictorSP(2);
-		leftbackMotor = new VictorSP(3);
+		rightFrontMotor = new VictorSP(0);
+		leftFrontMotor = new VictorSP(1);
+		rightBackMotor = new VictorSP(2);
+		leftBackMotor = new VictorSP(3);
 		// Sets up camera
 		server = CameraServer.getInstance();
 		server.setQuality(50);
@@ -95,6 +95,7 @@ public class Robot extends IterativeRobot {
 		default:
 			// Put default auto code here
 			break;
+			
 		}
 	}
 
