@@ -38,6 +38,7 @@ public class Shifting {
 		toggleState = false;
 	}
 
+	// This class uses the toggle output to change between speed and torque mode
 	public void teleopPeriodic() {
 		// calls on the input void in the toggle class and sets the 7th button
 		// on the left and right joysticks as inputs for the toggle class
