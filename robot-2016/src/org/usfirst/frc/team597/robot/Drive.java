@@ -5,37 +5,48 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive {
+	// Driver's joysticks
+	Joystick joystickLeft;
+	Joystick joystickRight;
+	
 	// Motors for tank-drive
 	VictorSP victorLeftFront;
 	VictorSP victorLeftBack;
 	VictorSP victorRightFront;
 	VictorSP victorRightBack;
-	Joystick joystickLeft;
-	Joystick joystickRight;
+	
 	// added custom gyro class
 	Gyro Gyro;
+	
 	// created variables for left speed and right speed
 	double rightSpeed;
 	double leftSpeed;
 	String driveMode;
 
 	public Drive(Joystick jsLeft, Joystick jsRight) {
+		// imported joystick from the main class
+		joystickLeft = jsLeft;
+		joystickRight = jsRight;
+				
 		// ports for motors on RoboRio
 		victorLeftFront = new VictorSP(0);
 		victorLeftBack = new VictorSP(1);
 		victorRightFront = new VictorSP(2);
 		victorRightBack = new VictorSP(3);
-		// imported joystick from the main class
-		joystickLeft = jsLeft;
-		joystickRight = jsRight;
+		
+		// Initializes gyro
 		Gyro = new Gyro();
+		
+		// String to print in DS
 		driveMode = "regular Tank";
 
 	}
-	// This void is used to activate the drive compensation class which helps
-	// the driver drive straight, this class can be activated by pressing button
-	// the trigger on either of the driving Joysticks
-
+	
+   /**
+	* This void is used to activate the drive compensation class which helps
+	*  the driver drive straight, this class can be activated by pressing button
+	*  the trigger on either of the driving Joysticks
+	*/
 	public void teleopPeriodic() {
 		// set the value of the left and right speed variables
 		leftSpeed = joystickLeft.getY();

@@ -10,6 +10,22 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shooter {
+	double shootingSpeed = 1.0;		// 100% Shooting motors speed
+	double intakeSpeed = -0.3;		// 30% Intake motor speed
+	
+	double HIGH_GOAL = 5000;		// High goal PID position
+	double LOW_GOAL = 2000;			// Low goal PID position
+	
+	double encoderNewPosition = 0;	// Encoder PID variable
+	
+	// Driver's shooting joystick 
+	Joystick joystickShooting;
+		
+	// 2 motors and 1 piston for shooting boulder
+	VictorSP shootingMotorOne;
+	VictorSP shootingMotorTwo;
+	DoubleSolenoid solShoot;
+		
 	// 2 motors for pivoting the shooter
 	VictorSP pivotingMotorOne;
 	VictorSP pivotingMotorTwo;
@@ -17,39 +33,26 @@ public class Shooter {
 	// 1 motor for in-take roller
 	VictorSP intakeMotor;
 	
-	// 2 motors and 1 piston for shooting boulder
-	VictorSP shootingMotorOne;
-	VictorSP shootingMotorTwo;
-	DoubleSolenoid solShoot;
-	
-	// Motor speed for intake
-	double intakeSpeed = -0.3;		//30% of motor full speed
-	// Motor speed for shooting
-	double shootingSpeed = 1.0;		//100% of motor speed
-	
 	// Encoder on articulating motor
 	Encoder pivotingEncoder;
 	
 	// Limit switch for resetting encoder
 	DigitalInput botLimitSwitch;
 	
-	// PID for articulating shooter
-	PIDController pivotingController;
-		
-	// Arm pivoting positions for PID
-	double TOP_POS = 5000;
-	
-	// Driver's shooting joystick 
-	Joystick joystickShooting;
-	
+	// PIDs for articulating shooter
+	PIDController leftPivotingController;
+	PIDController rightPivotingController;
 	
 	public Shooter(Joystick jsShooting) {
+		// Initializes joystick
+		joystickShooting = jsShooting;
+				
 		// Initializes motors
-		pivotingMotorOne = new VictorSP(8);		// motor on port 8 being tested with PID rn
-		pivotingMotorTwo = new VictorSP(5);
+		shootingMotorOne = new VictorSP(7);
+		shootingMotorTwo = new VictorSP(8);
+		pivotingMotorOne = new VictorSP(5);
+		pivotingMotorTwo = new VictorSP(6);
 		intakeMotor = new VictorSP(9);
-		shootingMotorOne = new VictorSP(6);
-		shootingMotorTwo = new VictorSP(7);
 		
 		// Initializes solenoid
 		solShoot = new DoubleSolenoid(2, 3);
@@ -61,20 +64,98 @@ public class Shooter {
 		botLimitSwitch = new DigitalInput(2);
 		
 		// Initializes PID
-		pivotingController = new PIDController(0.01, 0.0, 0.0, pivotingEncoder, pivotingMotorOne);
-		
-		// Initializes joystick
-		joystickShooting = jsShooting;
-		
+		leftPivotingController = new PIDController(0.01, 0.0, 0.0, pivotingEncoder, pivotingMotorOne);
+		rightPivotingController = new PIDController(0.01, 0.0, 0.0, pivotingEncoder, pivotingMotorTwo);
 		
 	}
 	
 	// Things to run during teleop
 	public void teleopPeriodic() {
-		intake();
 		shoot();
-		articulate();
+		manualArticulate();
+		setPositionArticulate();
+		intake();
+	}
+	
+	// Code for shooting boulders
+	public void shoot() {
+		// Rev-up shooting motors with green button
+		if (joystickShooting.getRawButton(1) == true) {
+			shootingMotorOne.set(shootingSpeed);
+			shootingMotorTwo.set(shootingSpeed);
+			
+			// Activate piston with red button
+			if (joystickShooting.getRawButton(2) == true) {
+				solShoot.set(Value.kForward);
+			}
+			else { 
+				solShoot.set(Value.kReverse);
+			}
+		}
+		else {
+			shootingMotorOne.set(0);
+			shootingMotorTwo.set(0);
+		}
+	}
+	
+	// Code for manually articulating shooter
+	public void manualArticulate() {
+		// Pivot shooter up when left joystick is pushed up
+		if (joystickShooting.getRawButton(8) == true) {
+			leftPivotingController.enable();		// Enables PIDs
+			rightPivotingController.enable();
+			
+			encoderNewPosition = pivotingEncoder.get() + 50;
+		}
+		// Pivot shooter down when left joystick is pushed down
+		if (joystickShooting.getRawButton(7) == true) {
+			leftPivotingController.enable();		// Enables PIDs
+			rightPivotingController.enable();
+			
+			encoderNewPosition = pivotingEncoder.get() - 50;
+		}
+		// PIDs pivot shooter
+		leftPivotingController.setSetpoint(encoderNewPosition);
+		rightPivotingController.setSetpoint(encoderNewPosition);
 		
+		// Disable PIDs
+		leftPivotingController.disable();
+		rightPivotingController.disable();
+		
+		// Reset encoder when limitswitch is hit
+		if (botLimitSwitch.get() == false) {
+			pivotingEncoder.reset();
+		}
+
+		// SmartDashboard debugging stuff
+		SmartDashboard.putNumber("pivoting motor value", pivotingMotorOne.get() );
+		SmartDashboard.putBoolean("limit switch state", botLimitSwitch.get() );
+		SmartDashboard.putNumber("encoder get", pivotingEncoder.get() );
+		
+	}
+	
+	// Code for pivoting shooter to preset positions
+	public void setPositionArticulate() {
+		// Left joystick at right position pivots shooter to high goal position
+		if (joystickShooting.getRawButton(6) == true) {
+			leftPivotingController.enable();
+			rightPivotingController.enable();
+			
+			leftPivotingController.setSetpoint(HIGH_GOAL);
+			rightPivotingController.setSetpoint(HIGH_GOAL);
+		}
+		// Left joystick at left position pivots shooter to low goal position
+		else if (joystickShooting.getRawButton(5) == true) {
+			leftPivotingController.enable();
+			rightPivotingController.enable();
+			
+			leftPivotingController.setSetpoint(LOW_GOAL);
+			rightPivotingController.setSetpoint(LOW_GOAL);
+		}
+		else {
+			leftPivotingController.disable();
+			rightPivotingController.disable();
+		}
 	}
 	
 	// Code for in-taking boulders 
@@ -87,71 +168,5 @@ public class Shooter {
 		}
 		
 	}
-	
-	// Code for shooting boulders
-	public void shoot() {
-		// Rev-up shooting motors with trigger
-		if (joystickShooting.getRawButton(1) == true) {
-			shootingMotorOne.set(shootingSpeed);
-			shootingMotorTwo.set(shootingSpeed);
-			
-			// Activate piston with button 2
-			if (joystickShooting.getRawButton(2) == true) {
-				solShoot.set(Value.kForward);
-			}
-			else { 
-				solShoot.set(Value.kReverse);
-			}
-		}
-		else {
-			shootingMotorOne.set(0);
-			shootingMotorTwo.set(0);
-		}
-		
-		
-	}
-	
-	// Code for articulating shooter
-	public void articulate() {
-		// Pivot shooter to joystick Y position when button 7 is pressed
-		if (joystickShooting.getRawButton(7) == true) {
-			// Enable PID
-			pivotingController.enable();
-			
-			// PID maps motor to joystick
-			pivotingController.setSetpoint(joystickShooting.getY() * 5000);
-		}
-		else {
-			// Disable PID and reset Encoder
-			pivotingController.disable();
-		}
-		
-		// PID to pivot shooter to preset positions
-		if (joystickShooting.getRawButton(4) == true) {
-			pivotingController.enable();
-			pivotingController.setSetpoint(TOP_POS);
-		}
-		else {
-			// Disable PID
-			pivotingController.disable();
-		}
-		
-		// Resets encoder when limitswitch is hit
-		if (botLimitSwitch.get() == true) {
-			pivotingEncoder.reset();
-		}
-		
-		// SmartDashboard debugging stuff			
-		SmartDashboard.putNumber("joystick value", joystickShooting.getY() );
-		SmartDashboard.putNumber("pivoting motor value", pivotingMotorOne.get() );
-		SmartDashboard.putBoolean("limit switch state", botLimitSwitch.get() );
-		
-		SmartDashboard.putNumber("encoder get", pivotingEncoder.get() );
-		SmartDashboard.putNumber("encoder rate", pivotingEncoder.getRate() );
-		SmartDashboard.putNumber("encoder distance", pivotingEncoder.getDistance() );
-		
-	}
-	
-	
 	
 }

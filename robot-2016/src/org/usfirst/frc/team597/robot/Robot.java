@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 	final String lowBarHighGoal = "Lowbar High-goal";
+	final String lowBarLowGoal = "Lowbar Low-goal";
 	final String lowBarCross = "Lowbar Cross";
 	
 	String autoSelected;
@@ -46,6 +47,7 @@ public class Robot extends IterativeRobot {
 		// SmartDashboard stuff
 		chooser = new SendableChooser();
 		chooser.addDefault("Lowbar High-goal", lowBarHighGoal);
+		chooser.addDefault("Lowbar Low-goal", lowBarLowGoal);
 		chooser.addObject("Lowbar Cross", lowBarCross);
 		SmartDashboard.putData("Auto choices", chooser);
 		
@@ -89,13 +91,15 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousPeriodic() {
 		switch (autoSelected) {
-		case lowBarCross:
-			// Custom auto code here
-			break;
-		case lowBarHighGoal:
-		default:
-			// Default auto code here
-			break;
+			case lowBarHighGoal:
+				// Code here
+				break;
+			case lowBarLowGoal:
+				// Code here
+				break;
+			default:
+				// Default code
+				break;
 		}
 	}
 
