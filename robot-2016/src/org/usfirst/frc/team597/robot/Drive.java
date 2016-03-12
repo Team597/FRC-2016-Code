@@ -2,7 +2,6 @@ package org.usfirst.frc.team597.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Drive {
 	// Driver's joysticks
@@ -49,8 +48,8 @@ public class Drive {
 	*/
 	public void teleopPeriodic() {
 		// set the value of the left and right speed variables
-		leftSpeed = joystickLeft.getY();
-		rightSpeed = joystickRight.getY();
+		leftSpeed = joystickLeft.getY()* -1;
+		rightSpeed = joystickRight.getY()* -1;
 
 		if (joystickLeft.getRawButton(1) == false && joystickRight.getRawButton(1) == false) {
 			// sets the value of the motors to the value of the left and right
@@ -71,8 +70,19 @@ public class Drive {
 			victorRightFront.set(Gyro.rightSPeed());
 			victorRightBack.set(Gyro.rightSPeed());
 		}
-		SmartDashboard.putString("tank mode", driveMode);
 
+	}
+	
+	// For autonomous
+	public void auto(double leftMotorSpeed, double rightMotorSpeed) {
+		// Left motors
+		victorLeftFront.set(-leftMotorSpeed);
+		victorLeftBack.set(-leftMotorSpeed);
+		
+		// Right motors
+		victorRightFront.set(-rightMotorSpeed);
+		victorRightBack.set(-rightMotorSpeed);
+		
 	}
 
 }

@@ -18,7 +18,7 @@ public class DriveComp implements PIDOutput {
 		// sets left speed equal to the pid output
 		leftSpeed = output;
 		// sets right speed equal to the opposite of pid
-		rightSpeed = output * -1;
+		rightSpeed = output;
 
 	}
 

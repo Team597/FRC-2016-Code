@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -16,9 +17,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String lowBarHighGoal = "Lowbar High-goal";
-	final String lowBarLowGoal = "Lowbar Low-goal";
+	final String lowBarTouch = "Lowbar Touch";
 	final String lowBarCross = "Lowbar Cross";
+	final String lowBarLowGoal = "Lowbar Low-goal";
+	final String lowBarHighGoal = "Lowbar High-goal";
 	
 	String autoSelected;
 	SendableChooser chooser;
@@ -38,6 +40,7 @@ public class Robot extends IterativeRobot {
 	Drive tankDrive;
 	Shifting driveShift;
 	Shooter shooter;
+	Arm telescoping;	// fix and finish
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -46,9 +49,11 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// SmartDashboard stuff
 		chooser = new SendableChooser();
-		chooser.addDefault("Lowbar High-goal", lowBarHighGoal);
-		chooser.addDefault("Lowbar Low-goal", lowBarLowGoal);
+		chooser.addObject("Lowbar Touch", lowBarTouch);
 		chooser.addObject("Lowbar Cross", lowBarCross);
+		chooser.addDefault("Lowbar Low-goal", lowBarLowGoal);
+		chooser.addDefault("Lowbar High-goal", lowBarHighGoal);
+		
 		SmartDashboard.putData("Auto choices", chooser);
 		
 		// Initializes joysticks
@@ -65,6 +70,7 @@ public class Robot extends IterativeRobot {
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickLeft, joystickRight);
 		shooter = new Shooter(joystickShooting);
+		telescoping = new Arm(joystickShooting);	// fix and finish
 	}
 
 	/**
@@ -80,9 +86,41 @@ public class Robot extends IterativeRobot {
 	 */
 	public void autonomousInit() {
 		autoSelected = (String) chooser.getSelected();
-		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
+		// autoSelected = SmartDashboard.getString("Auto Selector", defaultAuto);
 		System.out.println("Auto selected: " + autoSelected);
+		
+		switch (autoSelected) {
+		case lowBarTouch:
+			shooter.armAuto(0.60);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			Timer.delay(0.20);
+			shooter.armAuto(0);
+			Timer.delay(0.1);
+			
+			tankDrive.auto(0.600, 0.600);	// Move forward - run motors at 80% speed for 2 sec
+			Timer.delay(4.5);
+			tankDrive.auto(0, 0);
+			Timer.delay(15);
+			
+			break;
+		case lowBarCross:
+			
+			
+			break;
+		
+		/*
+		 * More advanced autonomi below. 	
+		 */
+		
+		case lowBarLowGoal:
+			// Code here
+			break;
+		case lowBarHighGoal:
+			// Code here
+			break;
+		default:
+			// Default code
+			break;
+	}
 	}
 
 	/**
@@ -90,17 +128,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		switch (autoSelected) {
-			case lowBarHighGoal:
-				// Code here
-				break;
-			case lowBarLowGoal:
-				// Code here
-				break;
-			default:
-				// Default code
-				break;
-		}
+		
 	}
 
 	/**
@@ -110,7 +138,15 @@ public class Robot extends IterativeRobot {
 		// Class teleop functions
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
-		shooter.teleopPeriodic();
+		telescoping.teleopPeriod();
+		
+		// Shooter functions
+		shooter.shoot();
+		shooter.intake();
+		shooter.armBasic();
+		shooter.pistons();
+		
+		
 	}
 
 	/**

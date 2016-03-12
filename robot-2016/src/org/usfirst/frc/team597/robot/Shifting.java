@@ -3,9 +3,9 @@ package org.usfirst.frc.team597.robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Shifting {
-	// Call on the toggle class that we created and names it toggleButton
 	ToggleButton toggleButton;
 
 	// creates a Joystick object and names it joystickLeft
@@ -22,6 +22,8 @@ public class Shifting {
 	// Creates a value named torqueMode and sets it equal to the value that
 	// sends the actuator inward.
 	final Value torqueMode = Value.kReverse;
+	
+	String driveMode = "Torque Mode";
 
 	public Shifting(Joystick jsLeft, Joystick jsRight) {
 		// finished creating object by making it a new toggle
@@ -46,12 +48,15 @@ public class Shifting {
 		// sets toggle state equal to the output boolean from the toggle class
 		toggleState = toggleButton.Output();
 
-		// if toggleState is false it sets the driveShifter to speedMode
+		// if toggleState is false it sets the driveShifter to torqueMode
 		if (toggleState == false) {
-			driveShifter.set(speedMode);
-		} else {
-			// if toggleState is true it sets the driverShifter to torqueMode
 			driveShifter.set(torqueMode);
+			driveMode = "TORQUE";
+		} else {
+			// if toggleState is true it sets the driverShifter to speedMode
+			driveShifter.set(speedMode);
+			driveMode = "SPEED";
 		}
+		SmartDashboard.putString("Drive Mode", driveMode);
 	}
 }
