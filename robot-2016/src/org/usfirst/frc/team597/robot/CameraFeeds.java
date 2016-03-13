@@ -36,10 +36,10 @@ public class CameraFeeds {
 	
 	public void run()
 	{
-		if(joystickShooting.getRawButton(5))
+		if(joystickShooting.getRawButton(10))		// change ports for Hector
 			changeCam(camCenter);
 		
-		if(joystickShooting.getRawButton(6))
+		if(joystickShooting.getRawButton(11))		// change ports for Hector
 			changeCam(camRight);
 		
 		updateCam();

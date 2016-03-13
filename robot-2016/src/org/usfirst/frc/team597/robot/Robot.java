@@ -161,7 +161,7 @@ public class Robot extends IterativeRobot {
 		// Class teleop functions
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
-		telescoping.teleopPeriod();
+		// telescoping.teleopPeriod();
 		
 		// Shooter functions
 		shooter.shoot();
