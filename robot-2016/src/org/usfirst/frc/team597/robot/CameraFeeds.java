@@ -7,6 +7,13 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.CameraServer;
 
 public class CameraFeeds {
+	public static final int btCamCenter = 1;
+	public static final int btCamRight = 2;
+	
+	public static final String camNameCenter = "cam0";
+	public static final String camNameRight = "cam1";
+	public static final int imgQuality = 60;
+	
 	private final int camCenter;
 	private final int camRight;
 	private int curCam;
@@ -17,14 +24,14 @@ public class CameraFeeds {
 	
 	public CameraFeeds(Joystick jsShooting) {
         // Get camera ids by supplying camera name ex 'cam0', found on roborio web interface
-        camCenter = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameCenter, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camRight = NIVision.IMAQdxOpenCamera(Config.CameraFeeds.camNameRight, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        camCenter = NIVision.IMAQdxOpenCamera(camNameCenter, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        camRight = NIVision.IMAQdxOpenCamera(camNameRight, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
         curCam = camCenter;
         // Img that will contain camera img
         frame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
         // Server that we'll give the img to
         server = CameraServer.getInstance();
-        server.setQuality(Config.CameraFeeds.imgQuality);
+        server.setQuality(imgQuality);
         
         joystickShooting = jsShooting;
 	}
