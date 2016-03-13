@@ -17,13 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	final String lowBarTouch = "Lowbar Touch";
-	final String lowBarCross = "Lowbar Cross";
-	final String lowBarLowGoal = "Lowbar Low-goal";
-	final String lowBarHighGoal = "Lowbar High-goal";
-	
-	String autoSelected;
 	SendableChooser chooser;
+	final String touch = "Touch";
+	final String lowBarCross = "Lowbar Cross";
+	final String rockWallCross = "Rockwall Cross";
+	String autoSelected;
 	
 	// Joysticks for both drivers
 	Joystick joystickLeft;
@@ -49,12 +47,10 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		// SmartDashboard stuff
 		chooser = new SendableChooser();
-		chooser.addObject("Lowbar Touch", lowBarTouch);
+		chooser.addObject("Touch", touch);
 		chooser.addObject("Lowbar Cross", lowBarCross);
-		chooser.addDefault("Lowbar Low-goal", lowBarLowGoal);
-		chooser.addDefault("Lowbar High-goal", lowBarHighGoal);
-		
-		SmartDashboard.putData("Auto choices", chooser);
+		chooser.addObject("Rockwall Cross", rockWallCross);
+		SmartDashboard.putData("Auto Choices", chooser);
 		
 		// Initializes joysticks
 		joystickLeft = new Joystick(0);
@@ -63,12 +59,12 @@ public class Robot extends IterativeRobot {
 		
 		// Sets up camera
 		server = CameraServer.getInstance();
-		server.setQuality(50);
+		server.setQuality(45);
 		server.startAutomaticCapture("cam0");
 		
 		// Sets up classes
 		tankDrive = new Drive(joystickLeft,joystickRight);
-		driveShift = new Shifting(joystickLeft, joystickRight);
+		driveShift = new Shifting(joystickShooting);
 		shooter = new Shooter(joystickShooting);
 		telescoping = new Arm(joystickShooting);	// fix and finish
 	}
@@ -90,37 +86,52 @@ public class Robot extends IterativeRobot {
 		System.out.println("Auto selected: " + autoSelected);
 		
 		switch (autoSelected) {
-		case lowBarTouch:
-			shooter.armAuto(0.60);		// Lower arm - run motors at 70% speed for 0.5 sec 
-			Timer.delay(0.20);
-			shooter.armAuto(0);
-			Timer.delay(0.1);
+		case touch:
+			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			tankDrive.auto(0.600, 0.600);	// Move forward - run motors at 80% speed for 2 sec
+			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			Timer.delay(0.5);
+			shooter.armAuto(0);
+			Timer.delay(0.2);
+			
+			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 2 sec
+			Timer.delay(2);
+			tankDrive.auto(0, 0);
+			Timer.delay(15);
+			
+			break;
+		case lowBarCross:	// Works
+			Timer.delay(0.5);			// Wait 0.5 sec
+			
+			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			Timer.delay(0.5);
+			shooter.armAuto(0);
+			Timer.delay(0.2);
+			
+			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 4.5 sec
 			Timer.delay(4.5);
 			tankDrive.auto(0, 0);
 			Timer.delay(15);
 			
 			break;
-		case lowBarCross:
+		case rockWallCross:
+			Timer.delay(0.5);			// Wait 0.5 sec
 			
+			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			Timer.delay(0.5);
+			shooter.armAuto(0);
+			Timer.delay(0.2);
 			
-			break;
-		
-		/*
-		 * More advanced autonomi below. 	
-		 */
-		
-		case lowBarLowGoal:
-			// Code here
-			break;
-		case lowBarHighGoal:
-			// Code here
+			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
+			Timer.delay(4);
+			tankDrive.auto(0, 0);
+			Timer.delay(15);
+			
 			break;
 		default:
 			// Default code
 			break;
-	}
+		}
 	}
 
 	/**
@@ -128,7 +139,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during autonomous
 	 */
 	public void autonomousPeriodic() {
-		
+		// Nada, keep scrolling ...
 	}
 
 	/**

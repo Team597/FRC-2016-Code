@@ -21,7 +21,7 @@ public class Shooter {
 	// 2 motors and 1 piston for shooting boulder
 	VictorSP shootingMotorOne;
 	VictorSP shootingMotorTwo;
-	DoubleSolenoid solShoot;
+//	DoubleSolenoid solShoot;
 	
 	// 2 pistons to support arm
 	DoubleSolenoid pistons;
@@ -63,7 +63,7 @@ public class Shooter {
 		intakeMotor = new VictorSP(9);
 		
 		// Initializes solenoids
-		solShoot = new DoubleSolenoid(2, 3);
+//		solShoot = new DoubleSolenoid(2, 3);
 		pistons = new DoubleSolenoid(4 , 5);
 		
 		/*
@@ -96,10 +96,10 @@ public class Shooter {
 		
 		// Red button activates piston
 		if (joystickShooting.getRawButton(6) == true) {
-			solShoot.set(Value.kReverse);
+//			solShoot.set(Value.kReverse);
 		}
 		else {
-			solShoot.set(Value.kForward);
+//			solShoot.set(Value.kForward);
 		}
 	}
 	
