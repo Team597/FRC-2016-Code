@@ -68,7 +68,7 @@ public class Drive {
 		} else if (joystickRight.getRawButton(1) == true) {
 			leftSpeed = -joystickRight.getY();
 			rightSpeed = -joystickRight.getY();
-			drivePosition = "Straight";
+			drivePosition = "STRAIGHT";
 		}
 		victorLeftFront.set(leftSpeed);
 		victorLeftBack.set(leftSpeed);
