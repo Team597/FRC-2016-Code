@@ -1,7 +1,6 @@
 
 package org.usfirst.frc.team597.robot;
 
-import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,8 +27,11 @@ public class Robot extends IterativeRobot {
 	Joystick joystickRight;
 	Joystick joystickShooting;
 	
-	// Enables camera
-	CameraServer server;
+	// Old camera code
+	// CameraServer server;
+	
+	// New camera code
+	CameraFeeds cameraFeeds;
 	
 	// Starts compresor
 	Compressor comp;
@@ -57,16 +59,18 @@ public class Robot extends IterativeRobot {
 		joystickRight = new Joystick(1);
 		joystickShooting = new Joystick(2);
 		
-		// Sets up camera
-		server = CameraServer.getInstance();
-		server.setQuality(45);
-		server.startAutomaticCapture("cam0");
+		// Old camera code
+		// server = CameraServer.getInstance();
+		// server.setQuality(45);
+		// server.startAutomaticCapture("cam0");
 		
 		// Sets up classes
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickShooting);
 		shooter = new Shooter(joystickShooting);
-		telescoping = new Arm(joystickShooting);	// fix and finish
+		// telescoping = new Arm(joystickShooting); 
+		
+		cameraFeeds = new CameraFeeds(joystickShooting);
 	}
 
 	/**
@@ -141,6 +145,14 @@ public class Robot extends IterativeRobot {
 	public void autonomousPeriodic() {
 		// Nada, keep scrolling ...
 	}
+	
+	/**
+	 * This function is called once at the beginning during 
+	 * teleopPeriodic
+	 */
+	public void teleopInit() {
+		cameraFeeds.init();
+	}
 
 	/**
 	 * This function is called periodically during operator control
@@ -157,7 +169,15 @@ public class Robot extends IterativeRobot {
 		shooter.armBasic();
 		shooter.pistons();
 		
-		
+		cameraFeeds.run();
+	}
+	
+	/**
+	 * This function is called once at the beginning when the robot
+	 * is disabled
+	 */
+	public void disabledInit() {
+		cameraFeeds.end();
 	}
 
 	/**
