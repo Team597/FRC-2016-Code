@@ -39,53 +39,33 @@ public class Arm {
 		SmartDashboard.putNumber("Hall effect bot", hallEffectBot.getValue());
 		if (armStick.getRawButton(1) == false) {
 			armVictor.set(armStick.getZ() * .80);
-		} else if (armStick.getRawButton(1) == true) {
+		} else if (armStick.getRawButton(1) == true && armState == 0) {
 			armVictor.set(armStick.getZ());
 		}
-		// if (pidSetpoint <= 10000) {
-		// if (armStick.getRawButton(12) != increaseCheck &&
-		// armStick.getRawButton(12) == true) {
-		// pidSetpoint += 1000;
-		// }
-		// } else {
-		// pidSetpoint = 10000;
-		// }
-		// increaseCheck = armStick.getRawButton(12);
-		//
-		// if (pidSetpoint >= 0) {
-		// if (armStick.getRawButton(11) != decreaseCheck &&
-		// armStick.getRawButton(11) == true) {
-		// pidSetpoint -= 1000;
-		// }
-		// } else {
-		// pidSetpoint = 0;
-		// }
-		// decreaseCheck = armStick.getRawButton(11);
-		//
-		// if (armStick.getRawButton(4) == true) {
-		// armPID.setSetpoint(pidSetpoint);
-		// }
-		// armPID.enable();
-		// if (armState == 0) {
-		// if (hallEffectTop.getValue() < 170) {
-		// armState = 1;
-		// } else if (hallEffectBot.getValue() < 170) {
-		// armState = 2;
-		// }
-		// armVictor.set(PIDOutput.leftSpeed());
-		// } else if (armState == 1) {
-		// if (PIDOutput.leftSpeed() > 0) {
-		// armVictor.set(0);
-		// } else if (PIDOutput.leftSpeed() <= 0) {
-		// armState = 0;
-		// }
-		// } else if (armState == 2) {
-		// if (PIDOutput.leftSpeed() < 0) {
-		// armVictor.set(0);
-		// } else if (PIDOutput.leftSpeed() >= 0) {
-		// armState = 0;
-		// }
-		// }
+
+		if (hallEffectTop.getValue() < 170) {
+			armState = 1;
+		}
+		if (hallEffectBot.getValue() < 170) {
+			armState = 2;
+		} else {
+			armState = 0;
+		}
+
+		if (armState == 1) {
+			if(armStick.getZ() > 0){
+				armVictor.set(0);
+			}else{
+				armState = 0;
+			}
+		}
+		if(armState == 2){
+			if(armStick.getZ() < 0){
+				armVictor.set(0);
+			}else{
+				armState = 0;
+			}
+		}
 
 	}
 }
