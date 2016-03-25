@@ -19,8 +19,8 @@ public class Shooter {
 	Joystick joystickShooting;
 	
 	// 2 motors and 1 piston for shooting boulder
-	VictorSP shootingMotorOne;
-	VictorSP shootingMotorTwo;
+//	VictorSP shootingMotorOne;
+//	VictorSP shootingMotorTwo;
 //	DoubleSolenoid solShoot;
 	
 	// 2 pistons to support arm
@@ -56,8 +56,8 @@ public class Shooter {
 		joystickShooting = jsShooting;
 		
 		// Initializes motors
-		shootingMotorOne = new VictorSP(7);
-		shootingMotorTwo = new VictorSP(8);
+//		shootingMotorOne = new VictorSP(7);
+//		shootingMotorTwo = new VictorSP(8);
 		pivotingMotorOne = new VictorSP(5);
 		pivotingMotorTwo = new VictorSP(6);
 		intakeMotor = new VictorSP(9);
@@ -85,42 +85,42 @@ public class Shooter {
 	// Code for shooting boulders
 	public void shoot() {
 		// Green button revs up motors
-		if (joystickShooting.getRawButton(8) == true) {
-			shootingMotorOne.set(shootingSpeed);
-			shootingMotorTwo.set(shootingSpeed);
-		}
-		else {
-			shootingMotorOne.set(0);
-			shootingMotorTwo.set(0);
-		}
+//		if (joystickShooting.getRawButton(8) == true) {
+//			shootingMotorOne.set(shootingSpeed);
+//			shootingMotorTwo.set(shootingSpeed);
+//		}
+//		else {
+//			shootingMotorOne.set(0);
+//			shootingMotorTwo.set(0);
+//		}
 		
 		// Red button activates piston
-		if (joystickShooting.getRawButton(6) == true) {
+//		if (joystickShooting.getRawButton(6) == true) {
 //			solShoot.set(Value.kReverse);
-		}
-		else {
+//		}
+//		else {
 //			solShoot.set(Value.kForward);
-		}
+//		}
 	}
 	
 	// Code for in-taking boulders 
 	public void intake() {
 		// Yellow button activates intake
-		if (joystickShooting.getRawButton(7) == true) {
+		if (joystickShooting.getRawButton(4) == true) {
 			intakeMotor.set(-intakeSpeed);			// Rollers
-			shootingMotorOne.set(-intakeSpeed);		// Shooters
-			shootingMotorTwo.set(-intakeSpeed);
+//			shootingMotorOne.set(-intakeSpeed);		// Shooters
+//			shootingMotorTwo.set(-intakeSpeed);
 		}
 		else if(joystickShooting.getRawButton(2) == true){
 			intakeMotor.set(intakeSpeed);
-			shootingMotorOne.set(intakeSpeed);
-			shootingMotorTwo.set(intakeSpeed);
+//			shootingMotorOne.set(intakeSpeed);
+//			shootingMotorTwo.set(intakeSpeed);
 		}
 		
 		else{
 			intakeMotor.set(0);				// Rollers
-			shootingMotorOne.set(0);		// Shooters
-			shootingMotorTwo.set(0);
+//			shootingMotorOne.set(0);		// Shooters
+//			shootingMotorTwo.set(0);
 		}
 	}
 	

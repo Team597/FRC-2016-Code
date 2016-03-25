@@ -14,6 +14,7 @@ public class Arm {
 	PIDController armPID;
 	DriveComp PIDOutput;
 	VictorSP armVictor;
+	VictorSP winchVictor;
 	int armState;
 	int pidSetpoint;
 	boolean decreaseCheck;
@@ -27,6 +28,7 @@ public class Arm {
 		PIDOutput = new DriveComp();
 		armPID = new PIDController(1.0 / 100.0, 0.0, 0.0, armEncoder, PIDOutput);
 		armVictor = new VictorSP(4);
+		winchVictor = new VictorSP(7);
 		armState = 0;
 		pidSetpoint = 1000;
 		decreaseCheck = false;
@@ -37,35 +39,28 @@ public class Arm {
 	public void teleopPeriod() {
 		SmartDashboard.putNumber("Hall effect top", hallEffectTop.getValue());
 		SmartDashboard.putNumber("Hall effect bot", hallEffectBot.getValue());
-		if (armStick.getRawButton(1) == false) {
-			armVictor.set(armStick.getZ() * .80);
-		} else if (armStick.getRawButton(1) == true && armState == 0) {
-			armVictor.set(armStick.getZ());
-		}
-
-		if (hallEffectTop.getValue() < 170) {
-			armState = 1;
-		}
-		if (hallEffectBot.getValue() < 170) {
-			armState = 2;
-		} else {
-			armState = 0;
-		}
-
-		if (armState == 1) {
-			if(armStick.getZ() > 0){
-				armVictor.set(0);
-			}else{
-				armState = 0;
+			if (hallEffectTop.getValue() < 170) {
+				if (-armStick.getZ() < 0) {
+					armVictor.set(-armStick.getZ());
+				} else {
+					armVictor.set(0);
+				}
+			} else if (hallEffectBot.getValue() < 170) {
+				if (-armStick.getZ() > 0) {
+					armVictor.set(-armStick.getZ());
+				} else {
+					armVictor.set(0);
+				}
+			} else {
+				armVictor.set(-armStick.getZ());
 			}
-		}
-		if(armState == 2){
-			if(armStick.getZ() < 0){
-				armVictor.set(0);
-			}else{
-				armState = 0;
-			}
-		}
 
+//			if(-winchStick1.getY() > 0){
+//			 winchVictor1.set(-winchStick1.getY() * .50);
+//			 winchVictor2.set(-winchStick1.getY() * .50);
+//			}else{
+//				winchVictor1.set(0);
+//				winchVictor2.set(0);
+//			 }
 	}
 }
