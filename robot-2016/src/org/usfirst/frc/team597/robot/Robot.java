@@ -20,6 +20,7 @@ public class Robot extends IterativeRobot {
 	final String touch = "Touch";
 	final String lowBarCross = "Lowbar Cross";
 	final String rockWallCross = "Rockwall Cross";
+	final String roughTerrainCross = "Rough Terrain Cross";
 	String autoSelected;
 	
 	// Joysticks for both drivers
@@ -27,10 +28,7 @@ public class Robot extends IterativeRobot {
 	Joystick joystickRight;
 	Joystick joystickShooting;
 	
-	// Old camera code
-	// CameraServer server;
-	
-	// New camera code
+	// Duel camera code
 	CameraFeeds cameraFeeds;
 	
 	// Starts compresor
@@ -40,8 +38,7 @@ public class Robot extends IterativeRobot {
 	Drive tankDrive;
 	Shifting driveShift;
 	Shooter shooter;
-	Arm telescoping;	// fix and finish
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -52,6 +49,7 @@ public class Robot extends IterativeRobot {
 		chooser.addObject("Touch", touch);
 		chooser.addObject("Lowbar Cross", lowBarCross);
 		chooser.addObject("Rockwall Cross", rockWallCross);
+		chooser.addObject("Rough Terrain Cross", roughTerrainCross);
 		SmartDashboard.putData("Auto Choices", chooser);
 		
 		// Initializes joysticks
@@ -59,18 +57,13 @@ public class Robot extends IterativeRobot {
 		joystickRight = new Joystick(1);
 		joystickShooting = new Joystick(2);
 		
-		// Old camera code
-		// server = CameraServer.getInstance();
-		// server.setQuality(45);
-		// server.startAutomaticCapture("cam0");
+		// Duel camera class
+		cameraFeeds = new CameraFeeds(joystickShooting);
 		
 		// Sets up classes
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickShooting);
 		shooter = new Shooter(joystickShooting);
-		// telescoping = new Arm(joystickShooting); 
-		
-		cameraFeeds = new CameraFeeds(joystickShooting);
 	}
 
 	/**
@@ -100,9 +93,8 @@ public class Robot extends IterativeRobot {
 			
 			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 2 sec
 			Timer.delay(2);
-			tankDrive.auto(0, 0);
-			Timer.delay(15);
 			
+			tankDrive.auto(0, 0);		// Stop robot
 			break;
 		case lowBarCross:	// Works
 			Timer.delay(0.5);			// Wait 0.5 sec
@@ -114,9 +106,8 @@ public class Robot extends IterativeRobot {
 			
 			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 4.5 sec
 			Timer.delay(4.5);
-			tankDrive.auto(0, 0);
-			Timer.delay(15);
 			
+			tankDrive.auto(0, 0);		// Stop robot
 			break;
 		case rockWallCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
@@ -128,12 +119,24 @@ public class Robot extends IterativeRobot {
 			
 			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
 			Timer.delay(4);
-			tankDrive.auto(0, 0);
-			Timer.delay(15);
 			
+			tankDrive.auto(0, 0);		// Stop robot
+			break;
+		case roughTerrainCross:
+			Timer.delay(0.5);			// Wait 0.5 sec
+			
+			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			Timer.delay(0.5);
+			shooter.armAuto(0);
+			Timer.delay(0.2);
+			
+			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
+			Timer.delay(4);
+			
+			tankDrive.auto(0, 0);		// Stop robot
 			break;
 		default:
-			// Default code
+			// Nothing ...
 			break;
 		}
 	}
@@ -151,6 +154,7 @@ public class Robot extends IterativeRobot {
 	 * teleopPeriodic
 	 */
 	public void teleopInit() {
+		// Initial duel camera code
 		cameraFeeds.init();
 	}
 
@@ -161,14 +165,13 @@ public class Robot extends IterativeRobot {
 		// Class teleop functions
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
-		// telescoping.teleopPeriod();
 		
 		// Shooter functions
-		shooter.shoot();
 		shooter.intake();
-		shooter.armBasic();
-		shooter.pistons();
+		shooter.armPivot();
+		shooter.armPistons();
 		
+		// Runs duel cameras
 		cameraFeeds.run();
 	}
 	
@@ -177,6 +180,7 @@ public class Robot extends IterativeRobot {
 	 * is disabled
 	 */
 	public void disabledInit() {
+		// Disables duel cameras when robot is disabled
 		cameraFeeds.end();
 	}
 
@@ -184,7 +188,7 @@ public class Robot extends IterativeRobot {
 	 * This function is called periodically during test mode
 	 */
 	public void testPeriodic() {
-
+		// That's it!! That's all the code!
 	}
 
 }
