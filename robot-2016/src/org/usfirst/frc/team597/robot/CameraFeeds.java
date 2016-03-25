@@ -47,14 +47,6 @@ public class CameraFeeds {
 	}
 
 	public void run() {
-//		toggleButton.input(joystickShooting.getRawButton(5));
-//		if (toggleButton.Output() == false) { // change ports for Hector
-//			changeCam(camCenter);
-//		} else if (toggleButton.Output() == true) { // change ports
-//													// for
-//			// Hector
-//			changeCam(camRight);
-//		}
 		if(joystickShooting.getRawButton(7)){
 		changeCam(camCenter);
 		}else if(joystickShooting.getRawButton(8)){
