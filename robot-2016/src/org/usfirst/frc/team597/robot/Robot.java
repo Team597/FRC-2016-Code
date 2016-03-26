@@ -38,6 +38,7 @@ public class Robot extends IterativeRobot {
 	Drive tankDrive;
 	Shifting driveShift;
 	Shooter shooter;
+	Arm arm;
 	
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -64,7 +65,9 @@ public class Robot extends IterativeRobot {
 		tankDrive = new Drive(joystickLeft,joystickRight);
 		driveShift = new Shifting(joystickShooting);
 		shooter = new Shooter(joystickShooting);
+		arm =  new Arm(joystickShooting);
 	}
+	
 
 	/**
 	 * This autonomous (along with the chooser code above) shows how to select
@@ -86,23 +89,23 @@ public class Robot extends IterativeRobot {
 		case touch:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
 			Timer.delay(0.5);
 			shooter.armAuto(0);
-			Timer.delay(0.2);
+			Timer.delay(1.5);
 			
 			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 2 sec
 			Timer.delay(2);
 			
 			tankDrive.auto(0, 0);		// Stop robot
 			break;
-		case lowBarCross:	// Works
+		case lowBarCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
 			Timer.delay(0.5);
 			shooter.armAuto(0);
-			Timer.delay(0.2);
+			Timer.delay(1.5);
 			
 			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 4.5 sec
 			Timer.delay(4.5);
@@ -112,10 +115,10 @@ public class Robot extends IterativeRobot {
 		case rockWallCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
 			Timer.delay(0.5);
 			shooter.armAuto(0);
-			Timer.delay(0.2);
+			Timer.delay(1.5);
 			
 			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
 			Timer.delay(4);
@@ -125,10 +128,10 @@ public class Robot extends IterativeRobot {
 		case roughTerrainCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.70);		// Lower arm - run motors at 70% speed for 0.5 sec 
+			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
 			Timer.delay(0.5);
 			shooter.armAuto(0);
-			Timer.delay(0.2);
+			Timer.delay(1.5);
 			
 			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
 			Timer.delay(4);
@@ -165,11 +168,13 @@ public class Robot extends IterativeRobot {
 		// Class teleop functions
 		tankDrive.teleopPeriodic();
 		driveShift.teleopPeriodic();
+		arm.teleopPeriod();
 		
 		// Shooter functions
 		shooter.intake();
 		shooter.armPivot();
 		shooter.armPistons();
+		
 		
 		// Runs duel cameras
 		cameraFeeds.run();

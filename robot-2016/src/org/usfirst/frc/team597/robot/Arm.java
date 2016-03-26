@@ -23,7 +23,7 @@ public class Arm {
 		hallEffectTop = new AnalogInput(1);
 		hallEffectBot = new AnalogInput(2);
 		armVictor = new VictorSP(4);
-		winchVictor = new VictorSP(7);
+		winchVictor = new VictorSP(8);
 		armStick = jsArm;
 		winch = new DoubleSolenoid(2, 3);
 		toggleWinch = new ToggleButton();
@@ -34,16 +34,18 @@ public class Arm {
 		SmartDashboard.putNumber("Hall effect top", hallEffectTop.getValue());
 		SmartDashboard.putNumber("Hall effect bot", hallEffectBot.getValue());
 		SmartDashboard.putString("Winch State:", winchState);
-		toggleWinch.input(armStick.getRawButton(1));
-		if(toggleWinch.Output() == false){
-			winch.set(Value.kReverse);
-			winchState = "Active";
+		if (armStick.getRawButton(6) == true) {
+			if (armStick.getZ() > 0) {
+				winchVictor.set(armStick.getZ() * .50);
+			} else {
+				winchVictor.set(0);
+			}
+			if (armStick.getRawButton(1) == false) {
+				winch.set(Value.kForward);
+			} else {
+				winch.set(Value.kReverse);
+			}
 		}
-		if(toggleWinch.Output() == true){
-			winch.set(Value.kForward);
-			winchState = "Inactive";
-		}
-		
 		if (armStick.getRawButton(6) == false) {
 			if (hallEffectTop.getValue() < 170) {
 				if (armStick.getZ() < 0) {
@@ -60,13 +62,6 @@ public class Arm {
 			} else {
 				armVictor.set(-armStick.getZ());
 			}
-		} else if (armStick.getRawButton(6) == true) {
-			if (armStick.getZ() > 0) {
-				winchVictor.set(-armStick.getZ());
-			} else {
-				winchVictor.set(0);
-			}
 		}
-
 	}
 }

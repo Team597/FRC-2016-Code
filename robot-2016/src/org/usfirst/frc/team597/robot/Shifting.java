@@ -39,21 +39,21 @@ public class Shifting {
 
 	// This class uses the toggle output to change between speed and torque mode
 	public void teleopPeriodic() {
-		// calls on the input void in the toggle class and sets the 7th button
-		// on the left and right joysticks as inputs for the toggle class
-		toggleButton.input(joystickLeft.getRawButton(5));
-		// sets toggle state equal to the output boolean from the toggle class
-		toggleState = toggleButton.Output();
-
-		// if toggleState is false it sets the driveShifter to torqueMode
-		if (toggleState == false) {
-			driveShifter.set(torqueMode);
-			driveMode = "TORQUE";
-		} else {
-			// if toggleState is true it sets the driverShifter to speedMode
-			driveShifter.set(speedMode);
-			driveMode = "SPEED";
-		}
+//		// calls on the input void in the toggle class and sets the 7th button
+//		// on the left and right joysticks as inputs for the toggle class
+//		toggleButton.input(joystickLeft.getRawButton(5));
+//		// sets toggle state equal to the output boolean from the toggle class
+//		toggleState = toggleButton.Output();
+//
+//		// if toggleState is false it sets the driveShifter to torqueMode
+//		if (toggleState == false) {
+//			driveShifter.set(torqueMode);
+//			driveMode = "TORQUE";
+//		} else {
+//			// if toggleState is true it sets the driverShifter to speedMode
+//			driveShifter.set(speedMode);
+//			driveMode = "SPEED";
+//		}
 		SmartDashboard.putString("Drive Mode", driveMode);
 	}
 }
