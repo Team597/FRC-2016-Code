@@ -89,12 +89,12 @@ public class Robot extends IterativeRobot {
 		case touch:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
-			Timer.delay(0.5);
-			shooter.armAuto(0);
-			Timer.delay(1.5);
+//			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
+//			Timer.delay(0.5);
+//			shooter.armAuto(0);
+//			Timer.delay(1.5);
 			
-			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 2 sec
+			tankDrive.auto(0.53, 0.60);	// Move forward - run motors at 60% speed for 2 sec
 			Timer.delay(2);
 			
 			tankDrive.auto(0, 0);		// Stop robot
@@ -102,12 +102,15 @@ public class Robot extends IterativeRobot {
 		case lowBarCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
-			Timer.delay(0.5);
-			shooter.armAuto(0);
-			Timer.delay(1.5);
+//			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
+//			Timer.delay(0.5);
+//			shooter.armAuto(0);
+//			Timer.delay(1.5);
 			
-			tankDrive.auto(0.60, 0.60);	// Move forward - run motors at 60% speed for 4.5 sec
+			tankDrive.auto(0.0, 0.60);	// Move forward - run motors at 80% speed for 4 sec
+			Timer.delay(.1);
+			
+			tankDrive.auto(0.53, 0.60);	// Move forward - run motors at 60% speed for 4.5 sec
 			Timer.delay(4.5);
 			
 			tankDrive.auto(0, 0);		// Stop robot
@@ -115,25 +118,31 @@ public class Robot extends IterativeRobot {
 		case rockWallCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
-			Timer.delay(0.5);
-			shooter.armAuto(0);
-			Timer.delay(1.5);
+//			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
+//			Timer.delay(0.5);
+//			shooter.armAuto(0);
+//			Timer.delay(1.5);
 			
-			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
-			Timer.delay(4);
+			tankDrive.auto(0.0, 0.85);	// Move forward - run motors at 80% speed for 4 sec
+			Timer.delay(.1);
+			
+			tankDrive.auto(0.78, 0.85);	// Move forward - run motors at 80% speed for 4 sec
+			Timer.delay(4.5);
 			
 			tankDrive.auto(0, 0);		// Stop robot
 			break;
 		case roughTerrainCross:
 			Timer.delay(0.5);			// Wait 0.5 sec
 			
-			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
-			Timer.delay(0.5);
-			shooter.armAuto(0);
-			Timer.delay(1.5);
+//			shooter.armAuto(0.50);		// Lower arm - run motors at 50% speed for 0.5 sec 
+//			Timer.delay(0.5);
+//			shooter.armAuto(0);
+//			Timer.delay(1.5);
 			
-			tankDrive.auto(0.80, 0.80);	// Move forward - run motors at 80% speed for 4 sec
+			tankDrive.auto(0.0, 0.80);	// Move forward - run motors at 80% speed for 4 sec
+			Timer.delay(.1);
+			
+			tankDrive.auto(0.73, 0.80);	// Move forward - run motors at 80% speed for 4 sec
 			Timer.delay(4);
 			
 			tankDrive.auto(0, 0);		// Stop robot

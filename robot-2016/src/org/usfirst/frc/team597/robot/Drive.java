@@ -57,18 +57,22 @@ public class Drive {
 
 		output = toggleButton.Output();
 
-		if (output == false && joystickRight.getRawButton(1) == false) {
+		if (output == false && joystickRight.getRawButton(1) == false && joystickLeft.getRawButton(1) == false) {
 			leftSpeed = joystickLeft.getY() * -1;
 			rightSpeed = joystickRight.getY() * -1;
 			drivePosition = "NORMAL";
-		} else if (output == true && joystickRight.getRawButton(1) == false) {
+		} else if (output == true && joystickRight.getRawButton(1) == false && joystickLeft.getRawButton(1) == false) {
 			leftSpeed = joystickRight.getY();
 			rightSpeed = joystickLeft.getY();
 			drivePosition = "BACKWARD";
-		} else if (joystickRight.getRawButton(1) == true) {
+		} else if (joystickRight.getRawButton(1) == true && joystickLeft.getRawButton(1) == false) {
 			leftSpeed = -joystickRight.getY();
 			rightSpeed = -joystickRight.getY();
 			drivePosition = "STRAIGHT";
+		} else if (joystickLeft.getRawButton(1) == true && joystickRight.getRawButton(1) == false) {
+			leftSpeed = -joystickLeft.getY() * 0.50;
+			rightSpeed = -joystickLeft.getY() * 0.50;
+			drivePosition = "SLOW STRAIGHT";
 		}
 		victorLeftFront.set(leftSpeed);
 		victorLeftBack.set(leftSpeed);

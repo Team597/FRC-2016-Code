@@ -18,6 +18,7 @@ public class Arm {
 	DoubleSolenoid winch;
 	ToggleButton toggleWinch;
 	String winchState;
+	Encoder armEn;
 
 	public Arm(Joystick jsArm) {
 		hallEffectTop = new AnalogInput(1);
@@ -28,6 +29,7 @@ public class Arm {
 		winch = new DoubleSolenoid(2, 3);
 		toggleWinch = new ToggleButton();
 		winchState = "Active";
+		armEn = new Encoder(8, 9);
 	}
 
 	public void teleopPeriod() {
@@ -36,31 +38,44 @@ public class Arm {
 		SmartDashboard.putString("Winch State:", winchState);
 		if (armStick.getRawButton(6) == true) {
 			if (armStick.getZ() > 0) {
-				winchVictor.set(armStick.getZ() * .50);
+				winchVictor.set(armStick.getZ() * .58);
 			} else {
 				winchVictor.set(0);
 			}
 			if (armStick.getRawButton(1) == false) {
 				winch.set(Value.kForward);
+				winchState = "Active";
 			} else {
 				winch.set(Value.kReverse);
+				winchState = "Inactive";
 			}
 		}
 		if (armStick.getRawButton(6) == false) {
-			if (hallEffectTop.getValue() < 170) {
-				if (armStick.getZ() < 0) {
-					armVictor.set(-armStick.getZ());
+			if (armStick.getRawButton(6) == false) {
+				if (hallEffectTop.getValue() < 170) {
+					armEn.reset();
+					if (armStick.getZ() < 0) {
+						armVictor.set(-armStick.getZ() * .50);
+					} else {
+						armVictor.set(0);
+					}
+				} else if (hallEffectBot.getValue() < 170) {
+					if (armStick.getZ() > 0) {
+						armVictor.set(-armStick.getZ() * .50);
+					} else {
+						armVictor.set(0);
+					}
 				} else {
-					armVictor.set(0);
+					if (armStick.getRawButton(3) == false) {
+						if (armEn.get() < 4200) {
+							armVictor.set(-armStick.getZ());
+						} else if (armEn.get() > 4200) {
+							armVictor.set(-armStick.getZ() * .40);
+						}
+					} else {
+						armVictor.set(-armStick.getZ());
+					}
 				}
-			} else if (hallEffectBot.getValue() < 170) {
-				if (armStick.getZ() > 0) {
-					armVictor.set(-armStick.getZ());
-				} else {
-					armVictor.set(0);
-				}
-			} else {
-				armVictor.set(-armStick.getZ());
 			}
 		}
 	}
